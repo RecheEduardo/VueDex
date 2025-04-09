@@ -1,32 +1,11 @@
 <template>
 	<div class="detail-container container d-flex justify-content-center gap-5 my-5" v-if="pokemon">
 		<!-- mostra imagem, id e nome do pokemon -->
-		<section class="section">
-			<div class="sprite-display">
-				<img
-					:src="spriteUrl"
-					:alt="pokemon.name + ' - ' + formatLabel(selectedSprite)"
-					class="sprite-image"
-				/>
-				<h3 class="text-muted text-center">#{{ pokemon.id }}</h3>
-				<h1 class="text-center display-3 fw-bold">{{ capitalize(pokemon.name) }}</h1>
-			</div>
-		</section>
-
-		
-		<section class="section d-flex flex-column gap-4">
-
-			<!-- nova aba de descrição -->
-			<section class="section">
-				<h2 class="display-5">Descrição</h2>
-				<p v-if="loadingDescription">Carregando descrição...</p>
-				<p v-else>{{ description }}</p>
-			</section>
-
+		<section class="section d-flex flex-column align-items-center">
 			<!-- selecao de sprite dinamica -->
-			<h2 class="display-5">Sprites</h2>
+			<h2 class="fw-bold text-muted">Sprite</h2>
 			<div class="sprite-select">
-				<select v-model="selectedSprite" class="form-select w-auto">
+				<select v-model="selectedSprite" class="form-select w-auto border-0 box-shadow text-muted mt-3">
 					<option
 						v-for="(url, key) in validSprites"
 						:key="key"
@@ -36,10 +15,30 @@
 					</option>
 				</select>
 			</div>
+			<div class="sprite-display">
+				<img
+					:src="spriteUrl"
+					:alt="pokemon.name + ' - ' + formatLabel(selectedSprite)"
+					class="sprite-image my-2"
+				/>
+				<h3 class="text-muted text-center mt-4">#{{ pokemon.id }}</h3>
+				<h1 class="text-center display-3 fw-bold">{{ capitalize(pokemon.name) }}</h1>
+			</div>
+		</section>
+
+		
+		<section class="section d-flex flex-column gap-4">
+
+			<!-- nova aba de descrição -->
+			<section class="section">
+				<h2 class="fs-1 text-muted fw-bold">Descrição</h2>
+				<p v-if="loadingDescription">Carregando descrição...</p>
+				<p v-else>{{ description }}</p>
+			</section>
 
 			<!-- movimentos com paginacao -->
-			<section class="section d-flex flex-column gap-4">
-				<h2 class="display-5">Movimentos</h2>
+			<section class="section d-flex flex-column gap-3">
+				<h2 class="fs-1 text-muted fw-bold mb-0">Movimentos</h2>
 				<span class="text-end text-muted">Página {{ currentMovePage }} de {{ totalMovePages }}</span>
 				<div
 					v-for="(move, idx) in paginatedMoves"
@@ -64,8 +63,8 @@
 
 			<!-- lista de jogos -->
 			<section class="section">
-				<h2>Jogos</h2>
-				<div class="d-flex flex-wrap gap-2">
+				<h2 class="display-5">Jogos</h2>
+				<div class="d-flex flex-wrap gap-2 my-4">
 					<span
 						v-for="(game, idx) in pokemon.gameIndices"
 						:key="idx"
@@ -78,7 +77,7 @@
 
 			<!-- lista de evolucoes, se existir -->
 			<section class="text-center" v-if="evolutions.length">
-				<h2 class="mb-4">Evoluções</h2>
+				<h2 class="mb-4 display-5">Evoluções</h2>
 					<span
 						v-for="(evo, idx) in evolutions"
 						:key="idx"
