@@ -1,107 +1,138 @@
 <template>
-	<div class="detail-container container d-flex justify-content-center my-5" v-if="pokemon">
-		<!-- mostra imagem, id e nome do pokemon -->
-		<section class="section img-div d-flex flex-column align-items-center">
-			<!-- selecao de sprite dinamica -->
-			<h2 class="fw-bold text-muted">Sprite</h2>
-			<div class="sprite-select">
-				<select v-model="selectedSprite" class="form-select w-auto border-0 box-shadow text-muted mt-3">
-					<option
-						v-for="(url, key) in validSprites"
-						:key="key"
-						:value="key"
-					>
-						{{ formatLabel(key) }}
-					</option>
-				</select>
+	<div>
+		<!-- navegaçao entre pokemons sequencial -->
+		<div class="py-3 container d-flex justify-content-between border-bottom" v-if="pokemon">
+			<router-link :to="{ name: 'Home' }" 
+				class="btn btn-lg btn-secondary"
+			>
+				Voltar
+			</router-link>
+			<div class="d-flex gap-3">
+				<router-link :to="{ name: 'Detail', params: { id: pokemon.id - 1 } }"
+					class="btn btn-lg btn-success fw-bold"
+					v-if="pokemon.id > 0"
+				>
+					{{ pokemon.id - 1 }}
+					<i class="ti ti-player-track-prev"></i>
+				</router-link>
+				<router-link :to="{ name: 'Detail', params: { id: pokemon.id + 1 } }"
+					class="btn btn-lg btn-success fw-bold"
+				>
+					<i class="ti ti-player-track-next"></i>
+					{{ pokemon.id + 1 }}
+				</router-link>
 			</div>
-			<div class="sprite-display">
-				<img
-					:src="spriteUrl"
-					:alt="pokemon.name + ' - ' + formatLabel(selectedSprite)"
-					class="sprite-image my-2"
-				/>
-				<h3 class="text-muted text-center mt-4">#{{ pokemon.id }}</h3>
-				<h1 class="text-center display-3 fw-bold">{{ capitalize(pokemon.name) }}</h1>
-			</div>
-			<div>
-				<div class="pokemon-types d-flex gap-2 mt-3" v-if="pokemon.types.length">
+		</div>
+
+		<div class="detail-container container d-flex justify-content-center my-4" v-if="pokemon">
+			
+			<!-- mostra imagem, id e nome do pokemon -->
+			<section class="section img-div d-flex flex-column align-items-center">
+
+				<div class="sprite-display">
+					<h3 class="text-muted text-center mb-2">#{{ pokemon.id }}</h3>
+					<h1 class="text-center display-3 fw-bold mb-4">{{ capitalize(pokemon.name) }}</h1>
+					<div class="pokemon-types d-flex gap-2 justify-content-center" v-if="pokemon.types.length">
+						<img
+						v-for="type in pokemon.types"
+						:key="type"
+						:src="getTypeIcon(type)"
+						:alt="type"
+						class="type-icon"
+						/>
+					</div>
 					<img
-					v-for="type in pokemon.types"
-					:key="type"
-					:src="getTypeIcon(type)"
-					:alt="type"
-					class="type-icon"
+						:src="spriteUrl"
+						:alt="pokemon.name + ' - ' + formatLabel(selectedSprite)"
+						class="sprite-image"
 					/>
 				</div>
-			</div>
-		</section>
 
-		
-		<section class="section details-div d-flex flex-column">
+				<!-- selecao de sprite dinamica -->
+				<h2 class="fw-bold text-muted mt-3">Sprite</h2>
 
-			<!-- nova aba de descrição -->
-			<section class="section border-bottom pb-4">
-				<h2 class="fs-1 text-muted fw-bold mb-3">Descrição em inglês</h2>
-				<p v-if="loadingDescription">Carregando descrição...</p>
-				<p v-else class="text-center fs-5">{{ description }}</p>
+				<div class="sprite-select">
+					<select v-model="selectedSprite" class="form-select w-auto border-0 box-shadow text-muted mt-3">
+						<option
+							v-for="(url, key) in validSprites"
+							:key="key"
+							:value="key"
+						>
+							{{ formatLabel(key) }}
+						</option>
+					</select>
+				</div>
+				
 			</section>
 
-			<!-- movimentos com paginacao -->
-			<section class="section d-flex flex-column gap-3 border-bottom py-4">
-				<h2 class="fs-1 text-muted fw-bold mb-0">Movimentos</h2>
-				<span class="text-end text-muted">Página {{ currentMovePage }} de {{ totalMovePages }}</span>
-				<div class="row row-cols-2 g-3">
-					<div v-for="(move, idx) in paginatedMoves" :key="`move-${idx}`" class="col">
-						<div class="card box-shadow border-0 p-3 text-muted text-center fs-5 fw-bold">
-							{{ capitalize(move) }}
+			<!-- detalhes do pokemon da tela -->
+			<section class="section details-div d-flex flex-column">
+
+				<!-- nova aba de descrição -->
+				<section class="section border-bottom pb-4">
+					<h2 class="fs-1 text-muted fw-bold mb-3">Descrição em inglês</h2>
+					<p v-if="loadingDescription">Carregando descrição...</p>
+					<p v-else class="text-center fs-5">{{ description }}</p>
+				</section>
+
+				<!-- movimentos com paginacao -->
+				<section class="section d-flex flex-column gap-3 border-bottom py-4">
+					<h2 class="fs-1 text-muted fw-bold mb-0">Movimentos</h2>
+					<span class="text-end text-muted">Página {{ currentMovePage }} de {{ totalMovePages }}</span>
+					<div class="row row-cols-2 g-3">
+						<div v-for="(move, idx) in paginatedMoves" :key="`move-${idx}`" class="col">
+							<div class="card box-shadow border-0 p-3 text-muted text-center fs-5 fw-bold">
+								{{ capitalize(move) }}
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="pagination-controls d-flex justify-content-between mt-2">
-					<button @click="prevPage" :disabled="currentMovePage === 1" class="btn box-shadow fw-bold btn-secondary">
-						Anterior
-					</button>
-					<button
-						@click="nextPage"
-						:disabled="currentMovePage === totalMovePages"
-						class="btn box-shadow fw-bold btn-primary"
-					>
-						Proximo
-					</button>
-				</div>
-			</section>
+					<div class="pagination-controls d-flex justify-content-between mt-2">
+						<button @click="prevPage" :disabled="currentMovePage === 1" class="btn box-shadow fw-bold btn-secondary">
+							Anterior
+						</button>
+						<button
+							@click="nextPage"
+							:disabled="currentMovePage === totalMovePages"
+							class="btn box-shadow fw-bold btn-primary"
+						>
+							Proximo
+						</button>
+					</div>
+				</section>
 
-			<!-- lista de jogos -->
-			<section v-if="pokemon.gameIndices.length" class="section border-bottom py-2">
-				<h2 class="display-5">Jogos</h2>
-				<div class="d-flex flex-wrap gap-2 my-4">
-					<span
-						v-for="(game, idx) in pokemon.gameIndices"
-						:key="idx"
-						class="badge box-shadow text-bg-secondary"
-					>
-						{{ capitalize(game) }}
-					</span>
-				</div>
-			</section>
+				<!-- lista de jogos -->
+				<section v-if="pokemon.gameIndices.length" class="section border-bottom py-2">
+					<h2 class="display-5">Jogos</h2>
+					<div class="d-flex flex-wrap gap-2 my-4">
+						<span
+							v-for="(game, idx) in pokemon.gameIndices"
+							:key="idx"
+							class="badge box-shadow text-bg-secondary"
+						>
+							{{ capitalize(game) }}
+						</span>
+					</div>
+				</section>
 
-			<!-- lista de evolucoes, se existir -->
-			<section class="text-center py-4" v-if="evolutions.length">
-				<h2 class="mb-4 display-5">Evoluções</h2>
-					<span
+				<!-- lista de evolucoes, se existir -->
+				<section class="text-center py-4" v-if="evolutions.length">
+					<h2 class="mb-4 display-5">Evoluções</h2>
+					<router-link
 						v-for="(evo, idx) in evolutions"
 						:key="idx"
-						class="badge box-shadow fs-4 text-bg-success mx-2"
+						:to="{ name: 'Detail', params: { id: evo.name } }"
+						class="badge box-shadow fs-4 text-bg-success mx-2 text-decoration-none"
 					>
 						{{ capitalize(evo.name) }}
-					</span>
+					</router-link>
+				</section>
 			</section>
-		</section>
-	</div>
 
-	<div v-else-if="error" class="error">{{ error }}</div>
-	<div v-else class="loading">Carregando...</div>
+		</div>
+
+		<div v-else-if="error" class="error">{{ error }}</div>
+		<div v-else class="loading">Carregando...</div>
+	</div>
 </template>
 
 <script>
@@ -121,7 +152,7 @@ export default {
 			loadingDescription: true,    // estado de carregamento da descrição
 			error: null,                 // mensagem de erro
 			currentMovePage: 1,          // pagina atual de movimentos
-			movesPerPage: 4	,             // quantos movimentos por pagina
+			movesPerPage: 4,             // quantos movimentos por pagina
 			selectedSprite: 'home.front_default' // sprite padrao selecionado
 		}
 	},
@@ -197,41 +228,53 @@ export default {
 		getTypeIcon(type) {
 			// usa o import.meta.url do vite para resolver o caminho
 			return new URL(`../assets/pokemon-types/${type}.svg`, import.meta.url).href
+		},
+		// metodo reutilizavel para buscar todos os dados do pokemon
+		async loadPokemon(id) {
+			try {
+				this.loadingDescription = true
+				this.error = null
+				this.pokemon = null
+				this.evolutions = []
+				this.description = ''
+				this.selectedSprite = 'home.front_default'
+				this.currentMovePage = 1
+
+				const data = await fetchPokemonDetail(id)
+				this.pokemon = data
+
+				// se sprite padrao nao existir, escolhe primeiro disponivel
+				if (!this.validSprites[this.selectedSprite]) {
+					this.selectedSprite = Object.keys(this.validSprites)[0] || ''
+				}
+
+				// busca dados da espécie (já retorna .description e .evolution_chain)
+				const species = await fetchPokemonSpecies(id)
+
+				// atribui descrição em português
+				this.description = species.description
+				this.loadingDescription = false
+
+				// atribui evoluções, se houver
+				if (species.evolution_chain?.url) {
+					const evoData = await fetchEvolutionChain(species.evolution_chain.url)
+					this.evolutions = this.extractEvolutions(evoData.chain)
+				}
+
+			} catch (err) {
+				console.error(err)
+				this.error = 'Erro ao carregar os dados do Pokemon.'
+			}
 		}
 	},
 	async mounted() {
 		// pega id do pokemon da rota
-		const id = this.$route.params.id
-		try {
-
-			// busca dados do pokemon
-			const data = await fetchPokemonDetail(id)
-			this.pokemon = data
-			this.currentMovePage = 1
-
-			// se sprite padrao nao existir, escolhe primeiro disponivel
-			if (!this.validSprites[this.selectedSprite]) {
-				this.selectedSprite = Object.keys(this.validSprites)[0] || ''
-			}
-
-			// busca dados da espécie (já retorna .description e .evolution_chain)
-			const species = await fetchPokemonSpecies(id)
-
-			// atribui descrição em português
-			this.description = species.description
-			this.loadingDescription = false
-
-			// atribui evoluções, se houver
-			if (species.evolution_chain?.url) {
-				const evoData = await fetchEvolutionChain(species.evolution_chain.url)
-				this.evolutions = this.extractEvolutions(evoData.chain)
-			}
-
-
-		} catch (err) {
-			console.error(err)
-			this.error = 'Erro ao carregar os dados do Pokemon.'
-		}
+		await this.loadPokemon(this.$route.params.id)
+	},
+	// dispara de novo o mounted() quando mudar o :id da rota
+	beforeRouteUpdate(to, from, next) {
+		this.loadPokemon(to.params.id)
+		next()
 	}
 }
 </script>
