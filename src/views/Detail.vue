@@ -27,17 +27,17 @@
 		</section>
 
 		
-		<section class="section details-div d-flex flex-column gap-4">
+		<section class="section details-div d-flex flex-column">
 
 			<!-- nova aba de descrição -->
-			<section class="section">
+			<section class="section border-bottom pb-4">
 				<h2 class="fs-1 text-muted fw-bold">Descrição</h2>
 				<p v-if="loadingDescription">Carregando descrição...</p>
-				<p v-else class="fs-5 lh-5 text-center">{{ description }}</p>
+				<p v-else class="text-center fs-5">{{ description }}</p>
 			</section>
 
 			<!-- movimentos com paginacao -->
-			<section class="section d-flex flex-column gap-3">
+			<section class="section d-flex flex-column gap-3 border-bottom py-4">
 				<h2 class="fs-1 text-muted fw-bold mb-0">Movimentos</h2>
 				<span class="text-end text-muted">Página {{ currentMovePage }} de {{ totalMovePages }}</span>
 				<div class="row row-cols-2 g-3">
@@ -62,7 +62,7 @@
 			</section>
 
 			<!-- lista de jogos -->
-			<section class="section">
+			<section class="section border-bottom py-2">
 				<h2 class="display-5">Jogos</h2>
 				<div class="d-flex flex-wrap gap-2 my-4">
 					<span
@@ -76,7 +76,7 @@
 			</section>
 
 			<!-- lista de evolucoes, se existir -->
-			<section class="text-center" v-if="evolutions.length">
+			<section class="text-center py-4" v-if="evolutions.length">
 				<h2 class="mb-4 display-5">Evoluções</h2>
 					<span
 						v-for="(evo, idx) in evolutions"
