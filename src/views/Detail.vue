@@ -24,6 +24,17 @@
 				<h3 class="text-muted text-center mt-4">#{{ pokemon.id }}</h3>
 				<h1 class="text-center display-3 fw-bold">{{ capitalize(pokemon.name) }}</h1>
 			</div>
+			<div>
+				<div class="pokemon-types d-flex gap-2 mt-3" v-if="pokemon.types.length">
+					<img
+					v-for="type in pokemon.types"
+					:key="type"
+					:src="getTypeIcon(type)"
+					:alt="type"
+					class="type-icon"
+					/>
+				</div>
+			</div>
 		</section>
 
 		
@@ -182,6 +193,10 @@ export default {
 		// vai para proxima pagina de movimentos
 		nextPage() {
 			if (this.currentMovePage < this.totalMovePages) this.currentMovePage++
+		},
+		getTypeIcon(type) {
+			// usa o import.meta.url do vite para resolver o caminho
+			return new URL(`../assets/pokemon-types/${type}.svg`, import.meta.url).href
 		}
 	},
 	async mounted() {
@@ -236,5 +251,9 @@ export default {
 }
 .box-shadow{
 	box-shadow: 0 0 20px rgba(138, 138, 138, 0.25);
+}
+.type-icon {
+  width: 48px;
+  height: 48px;
 }
 </style>
