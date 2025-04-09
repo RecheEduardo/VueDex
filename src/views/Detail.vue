@@ -13,7 +13,16 @@
 			</div>
 		</section>
 
+		
 		<section class="section d-flex flex-column gap-4">
+
+			<!-- nova aba de descrição -->
+			<section class="section">
+				<h2 class="display-5">Descrição</h2>
+				<p v-if="loadingDescription">Carregando descrição...</p>
+				<p v-else>{{ description }}</p>
+			</section>
+
 			<!-- selecao de sprite dinamica -->
 			<h2 class="display-5">Sprites</h2>
 			<div class="sprite-select">
@@ -31,24 +40,22 @@
 			<!-- movimentos com paginacao -->
 			<section class="section d-flex flex-column gap-4">
 				<h2 class="display-5">Movimentos</h2>
-				<ul class="list-group">
-					<li
-						v-for="(move, idx) in paginatedMoves"
-						:key="`move-${idx}`"
-						class="list-group-item"
-					>
-						{{ capitalize(move) }}
-					</li>
-				</ul>
-				<div class="pagination-controls">
-					<button @click="prevPage" :disabled="currentMovePage === 1" class="btn btn-secondary">
+				<span class="text-end text-muted">Página {{ currentMovePage }} de {{ totalMovePages }}</span>
+				<div
+					v-for="(move, idx) in paginatedMoves"
+					:key="`move-${idx}`"
+					class="card box-shadow border-0 p-3 text-muted text-center fs-5 fw-bold"
+				>
+					{{ capitalize(move) }}
+				</div>
+				<div class="pagination-controls d-flex justify-content-between">
+					<button @click="prevPage" :disabled="currentMovePage === 1" class="btn box-shadow fw-bold btn-secondary">
 						Anterior
 					</button>
-					<span>Página {{ currentMovePage }} de {{ totalMovePages }}</span>
 					<button
 						@click="nextPage"
 						:disabled="currentMovePage === totalMovePages"
-						class="btn btn-primary"
+						class="btn box-shadow fw-bold btn-primary"
 					>
 						Proximo
 					</button>
@@ -58,27 +65,27 @@
 			<!-- lista de jogos -->
 			<section class="section">
 				<h2>Jogos</h2>
-				<ul>
-					<li
+				<div class="d-flex flex-wrap gap-2">
+					<span
 						v-for="(game, idx) in pokemon.gameIndices"
 						:key="idx"
+						class="badge box-shadow text-bg-secondary"
 					>
 						{{ capitalize(game) }}
-					</li>
-				</ul>
+					</span>
+				</div>
 			</section>
 
 			<!-- lista de evolucoes, se existir -->
-			<section class="section" v-if="evolutions.length">
-				<h2>Evolucoes</h2>
-				<ul>
-					<li
+			<section class="text-center" v-if="evolutions.length">
+				<h2 class="mb-4">Evoluções</h2>
+					<span
 						v-for="(evo, idx) in evolutions"
 						:key="idx"
+						class="badge box-shadow fs-4 text-bg-success mx-2"
 					>
 						{{ capitalize(evo.name) }}
-					</li>
-				</ul>
+					</span>
 			</section>
 		</section>
 	</div>
@@ -100,6 +107,8 @@ export default {
 		return {
 			pokemon: null,               // dados do pokemon carregado
 			evolutions: [],              // lista de evolucoes
+			description: '',             // descrição em pt-br
+			loadingDescription: true,    // estado de carregamento da descrição
 			error: null,                 // mensagem de erro
 			currentMovePage: 1,          // pagina atual de movimentos
 			movesPerPage: 5,             // quantos movimentos por pagina
@@ -180,20 +189,31 @@ export default {
 		// pega id do pokemon da rota
 		const id = this.$route.params.id
 		try {
+
 			// busca dados do pokemon
 			const data = await fetchPokemonDetail(id)
 			this.pokemon = data
 			this.currentMovePage = 1
+
 			// se sprite padrao nao existir, escolhe primeiro disponivel
 			if (!this.validSprites[this.selectedSprite]) {
 				this.selectedSprite = Object.keys(this.validSprites)[0] || ''
 			}
-			// busca dados da especie para evolucao
+
+			// busca dados da espécie (já retorna .description e .evolution_chain)
 			const species = await fetchPokemonSpecies(id)
-			if (species?.evolution_chain?.url) {
+
+			// atribui descrição em português
+			this.description = species.description
+			this.loadingDescription = false
+
+			// atribui evoluções, se houver
+			if (species.evolution_chain?.url) {
 				const evoData = await fetchEvolutionChain(species.evolution_chain.url)
 				this.evolutions = this.extractEvolutions(evoData.chain)
 			}
+
+
 		} catch (err) {
 			console.error(err)
 			this.error = 'Erro ao carregar os dados do Pokemon.'
@@ -203,9 +223,16 @@ export default {
 </script>
 
 <style scoped>
+
+.detail-container{
+	width: 60% !important;
+}
 .sprite-image {
 	min-width: 500px;
 	max-width: 500px;
 	height: auto;
+}
+.box-shadow{
+	box-shadow: 0 0 20px rgba(138, 138, 138, 0.25);
 }
 </style>

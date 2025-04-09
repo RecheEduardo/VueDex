@@ -19,10 +19,24 @@ export function fetchPokemonDetail(pokemonIdentifier) {
         })
 }
 
-// busca dados da especie do pokemon, necessario pra pegar as evoluções
+// busca dados da espécie do pokemon, necessário pra pegar as evoluções e a descrição
 export function fetchPokemonSpecies(pokemonIdentifier) {
-    return axios.get(`${API_BASE}pokemon-species/${pokemonIdentifier}`)
-        .then(response => response.data)
+	return axios.get(`${API_BASE}pokemon-species/${pokemonIdentifier}`)
+		.then(response => {
+			const data = response.data
+
+            // encontra a primeira descriçao em ingles
+		    const flavorTextEntry = data.flavor_text_entries.find(
+    			entry => entry.language.name.startsWith('en')
+			)
+
+			return {
+				...data,
+				description: flavorTextEntry
+					? flavorTextEntry.flavor_text.replace(/[\f\n\r]/g, ' ')
+					: 'Descrição não disponível...'
+			}
+		})
 }
 
 // busca a cadeia de evolução a partir de uma URL que vem da especie
