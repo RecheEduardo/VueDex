@@ -1,7 +1,7 @@
 <template>
-	<div class="detail-container container d-flex justify-content-center gap-5 my-5" v-if="pokemon">
+	<div class="detail-container container d-flex justify-content-center my-5" v-if="pokemon">
 		<!-- mostra imagem, id e nome do pokemon -->
-		<section class="section d-flex flex-column align-items-center">
+		<section class="section img-div d-flex flex-column align-items-center">
 			<!-- selecao de sprite dinamica -->
 			<h2 class="fw-bold text-muted">Sprite</h2>
 			<div class="sprite-select">
@@ -27,27 +27,27 @@
 		</section>
 
 		
-		<section class="section d-flex flex-column gap-4">
+		<section class="section details-div d-flex flex-column gap-4">
 
 			<!-- nova aba de descrição -->
 			<section class="section">
 				<h2 class="fs-1 text-muted fw-bold">Descrição</h2>
 				<p v-if="loadingDescription">Carregando descrição...</p>
-				<p v-else>{{ description }}</p>
+				<p v-else class="fs-5 lh-5 text-center">{{ description }}</p>
 			</section>
 
 			<!-- movimentos com paginacao -->
 			<section class="section d-flex flex-column gap-3">
 				<h2 class="fs-1 text-muted fw-bold mb-0">Movimentos</h2>
 				<span class="text-end text-muted">Página {{ currentMovePage }} de {{ totalMovePages }}</span>
-				<div
-					v-for="(move, idx) in paginatedMoves"
-					:key="`move-${idx}`"
-					class="card box-shadow border-0 p-3 text-muted text-center fs-5 fw-bold"
-				>
-					{{ capitalize(move) }}
+				<div class="row row-cols-2 g-3">
+					<div v-for="(move, idx) in paginatedMoves" :key="`move-${idx}`" class="col">
+						<div class="card box-shadow border-0 p-3 text-muted text-center fs-5 fw-bold">
+							{{ capitalize(move) }}
+						</div>
+					</div>
 				</div>
-				<div class="pagination-controls d-flex justify-content-between">
+				<div class="pagination-controls d-flex justify-content-between mt-2">
 					<button @click="prevPage" :disabled="currentMovePage === 1" class="btn box-shadow fw-bold btn-secondary">
 						Anterior
 					</button>
@@ -110,7 +110,7 @@ export default {
 			loadingDescription: true,    // estado de carregamento da descrição
 			error: null,                 // mensagem de erro
 			currentMovePage: 1,          // pagina atual de movimentos
-			movesPerPage: 5,             // quantos movimentos por pagina
+			movesPerPage: 4	,             // quantos movimentos por pagina
 			selectedSprite: 'home.front_default' // sprite padrao selecionado
 		}
 	},
@@ -224,7 +224,10 @@ export default {
 <style scoped>
 
 .detail-container{
-	width: 60% !important;
+	gap: 10rem;
+}
+.details-div{
+	width: 45% !important;
 }
 .sprite-image {
 	min-width: 500px;
