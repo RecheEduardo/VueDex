@@ -1,7 +1,7 @@
 // src/router/index.js
 import { createRouter, createWebHistory } from 'vue-router';
-import Home from '@/views/Home.vue';
-import Detail from '@/views/Detail.vue';
+import Home from '../views/Home.vue';
+import Detail from '../views/Detail.vue';
 
 const routes = [ // rotas do app
   { path: '/', name: 'Home', component: Home },

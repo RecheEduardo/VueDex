@@ -1,3 +1,3 @@
 <template>
-    h1>Componente principal</h1>
+    <h1>Componente principal</h1>
 </template>
