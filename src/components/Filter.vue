@@ -1,12 +1,23 @@
 <template>
 	<!-- input com botão de busca -->
-	<div>
-        <!-- campo de texto vinculado ao estado local -->
-        <input type="text" v-model="searchQuery" placeholder="Buscar Pokémon...">
-        <!-- botão que dispara o filtro -->
-        <button class="btn" type="button" @click="emitFilter">
-            Buscar
-        </button>
+	<div class="filter rounded my-4">
+		<div class="input-group input-group-lg">
+			<!-- campo de texto vinculado ao estado local -->
+			<input
+				type="text"
+				v-model="searchQuery"
+				placeholder="Buscar Pokémon..."
+				class="form-control border-0 fs-2"
+			>
+			<!-- botão que dispara o filtro -->
+			<button
+				class="btn btn-danger fw-bold border-0 filter-btn"
+				type="button"
+				@click="emitFilter"
+			>
+				<i class="ti ti-pokeball fs-1"></i>
+			</button>
+		</div>
 	</div>
 </template>
 
@@ -35,3 +46,10 @@ export default {
 	}
 }
 </script>
+
+<style scoped>
+/* estilo da caixa de filtro */
+.filter {
+	box-shadow: 0 0 20px rgba(138, 138, 138, 0.1);
+}
+</style>
