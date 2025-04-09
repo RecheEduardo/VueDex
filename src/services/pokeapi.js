@@ -25,10 +25,17 @@ export function fetchPokemonSpecies(pokemonIdentifier) {
 		.then(response => {
 			const data = response.data
 
-            // encontra a descriçao da versão ruby em ingles (a mais completa da API)
-		    const flavorTextEntry = data.flavor_text_entries.find(
-    			entry => entry.language.name.startsWith('en') && entry.version.name === 'ruby'
+			// tenta encontrar primeiro a versão omega-ruby em ingles
+			let flavorTextEntry = data.flavor_text_entries.find(
+				entry => entry.language.name === 'en' && entry.version.name === 'omega-ruby'
 			)
+
+			// se nao encontrar, pega a versao padrão
+			if (!flavorTextEntry) {
+				flavorTextEntry = data.flavor_text_entries.find(
+					entry => entry.language.name === 'en'
+				)
+			}
 
 			return {
 				...data,

@@ -31,7 +31,7 @@
 
 			<!-- nova aba de descrição -->
 			<section class="section border-bottom pb-4">
-				<h2 class="fs-1 text-muted fw-bold">Descrição</h2>
+				<h2 class="fs-1 text-muted fw-bold mb-3">Descrição em inglês</h2>
 				<p v-if="loadingDescription">Carregando descrição...</p>
 				<p v-else class="text-center fs-5">{{ description }}</p>
 			</section>
@@ -62,7 +62,7 @@
 			</section>
 
 			<!-- lista de jogos -->
-			<section class="section border-bottom py-2">
+			<section v-if="pokemon.gameIndices.length" class="section border-bottom py-2">
 				<h2 class="display-5">Jogos</h2>
 				<div class="d-flex flex-wrap gap-2 my-4">
 					<span
