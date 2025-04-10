@@ -1,52 +1,71 @@
 <template>
 	<div>
 		<!-- input com botão de busca -->
-		<div class="filter rounded my-4">
-			<div class="input-group input-group-lg mb-2">
-				<!-- campo de texto vinculado ao estado local -->
-				<input
-					type="text"
-					v-model="searchQuery"
-					placeholder="Buscar Pokémon..."
-					class="form-control pokemon-input border-0 fs-2"
-				>
-				<!-- botao que dispara o filtro -->
-				<button
-					class="btn btn-danger fw-bold border-0 filter-btn"
-					type="button"
-					@click="emitFilter"
-				>
-					<i class="ti ti-pokeball fs-1"></i>
-				</button>
+		<Motion asChild
+			:initial="{ scale: 0.5, opacity: 0 }"
+			:animate="{ scale: 1, opacity: 1 }" 
+			:transition="{ type: 'spring', stiffness: 100, damping: 25 }"
+		>
+			<div class="filter rounded my-4">
+				<div class="input-group input-group-lg mb-2">
+					<!-- campo de texto vinculado ao estado local -->
+					<input
+						type="text"
+						v-model="searchQuery"
+						placeholder="Buscar Pokémon..."
+						class="form-control pokemon-input border-0 fs-2"
+					>
+					<!-- botao que dispara o filtro -->
+					<button
+						class="btn btn-danger fw-bold border-0 filter-btn"
+						type="button"
+						@click="emitFilter"
+					>
+						<i class="ti ti-pokeball fs-1"></i>
+					</button>
+				</div>
 			</div>
-		</div>
+		</Motion>
 
 		<!-- filtros opcionais de tipo e região -->
 		<div class="d-flex justify-content-end gap-3">
-			<select v-model="selectedType" 
-				class="form-select form-select-lg border-0 text-muted filter w-auto"
+			<Motion asChild
+				:initial="{ scale: 0, opacity: 0 }"
+				:animate="{ scale: 1, opacity: 1 }" 
+				:transition="{ type: 'spring', stiffness: 100, damping: 25, delay: 0.25 }"
 			>
-				<option value="">Todos os tipos</option>
-				<option v-for="type in types" :key="type" :value="type">
-					{{ capitalize(type) }}
-				</option>
-			</select>
+				<select v-model="selectedType" 
+					class="form-select form-select-lg border-0 text-muted filter w-auto"
+				>
+					<option value="">Todos os tipos</option>
+					<option v-for="type in types" :key="type" :value="type">
+						{{ capitalize(type) }}
+					</option>
+				</select>
+			</Motion>
 
-			<select v-model="selectedRegion" 
+			<Motion asChild
+				:initial="{ scale: 0, opacity: 0 }"
+				:animate="{ scale: 1, opacity: 1 }" 
+				:transition="{ type: 'spring', stiffness: 100, damping: 25, delay: 0.5 }"
+			>
+				<select v-model="selectedRegion" 
 				class="form-select form-select-lg border-0 text-muted filter w-auto"
 			>
 				<option value="">Todas as regiões</option>
 				<option v-for="region in regions" :key="region" :value="region">
 					{{ capitalize(region) }}
 				</option>
-			</select>
-
+				</select>
+			</Motion>
 		</div>
+
 	</div>
 </template>
 
 <script>
 import { ref, onMounted } from 'vue'
+import { Motion } from 'motion-v' // Lib para animações
 import { fetchTypeList, fetchPokedexList } from '../services/pokeapi'
 
 export default {
@@ -78,7 +97,8 @@ export default {
 			selectedRegion,
 			types,
 			regions,
-			emitFilter
+			emitFilter,
+			Motion
 		}
 	},
 	methods: {
@@ -87,6 +107,9 @@ export default {
 			if (!value) return ''
 			return value.charAt(0).toUpperCase() + value.slice(1)
 		}
+	},
+	components: {
+		Motion
 	}
 }
 </script>
