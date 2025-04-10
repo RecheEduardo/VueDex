@@ -102,4 +102,21 @@ export default {
 	transition: .25s ease-out;
 	transform: translateX(30px);
 }
+
+@media (max-width: 768px) {
+	.pokemon-image{
+		width: 110px;
+	}
+	.pokemon-name{
+		font-size: 1.5rem;
+		font-weight: 400;
+	}
+	.input-group:hover .pokemon-name {
+	font-size: 1.75rem;
+	transform: translateX(5px);
+	}
+	.input-group{
+		padding-block: -100px !important;
+	}
+}
 </style>

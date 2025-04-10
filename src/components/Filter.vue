@@ -8,9 +8,9 @@
 					type="text"
 					v-model="searchQuery"
 					placeholder="Buscar Pokémon..."
-					class="form-control border-0 fs-2"
+					class="form-control pokemon-input border-0 fs-2"
 				>
-				<!-- botão que dispara o filtro -->
+				<!-- botao que dispara o filtro -->
 				<button
 					class="btn btn-danger fw-bold border-0 filter-btn"
 					type="button"
@@ -95,5 +95,14 @@ export default {
 /* estilo da caixa de filtro */
 .filter {
 	box-shadow: 0 0 20px rgba(138, 138, 138, 0.20);
+}
+
+@media (max-width: 768px) {
+	.form-select-lg{
+		font-size: 1rem;
+	}
+	.pokemon-input{
+		font-size: 1.25rem !important;
+	}
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
 	<div class="home-container container pt-4">
-		<h1 class="display-1 mb-4 fw-bold text-muted text-center">Pokédex Interativa</h1>
+		<h1 class="site-title display-1 mb-4 fw-bold text-muted text-center">Pokédex Interativa</h1>
 
 		<!-- componente de filtro que emite evento com nome digitado -->
 		<Filter @filter="handleUpdateFilters" />
@@ -149,4 +149,9 @@ export default {
 </script>
 
 <style scoped>
+@media (max-width: 768px) {
+	.site-title{
+		font-size: 2.25rem;
+	}
+}
 </style>
