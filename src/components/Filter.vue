@@ -1,47 +1,91 @@
 <template>
-	<!-- input com botão de busca -->
-	<div class="filter rounded my-4">
-		<div class="input-group input-group-lg">
-			<!-- campo de texto vinculado ao estado local -->
-			<input
-				type="text"
-				v-model="searchQuery"
-				placeholder="Buscar Pokémon..."
-				class="form-control border-0 fs-2"
+	<div>
+		<!-- input com botão de busca -->
+		<div class="filter rounded my-4">
+			<div class="input-group input-group-lg mb-2">
+				<!-- campo de texto vinculado ao estado local -->
+				<input
+					type="text"
+					v-model="searchQuery"
+					placeholder="Buscar Pokémon..."
+					class="form-control border-0 fs-2"
+				>
+				<!-- botão que dispara o filtro -->
+				<button
+					class="btn btn-danger fw-bold border-0 filter-btn"
+					type="button"
+					@click="emitFilter"
+				>
+					<i class="ti ti-pokeball fs-1"></i>
+				</button>
+			</div>
+		</div>
+
+		<!-- filtros opcionais de tipo e região -->
+		<div class="d-flex justify-content-end gap-3">
+			<select v-model="selectedType" 
+				class="form-select form-select-lg border-0 text-muted filter w-auto"
 			>
-			<!-- botão que dispara o filtro -->
-			<button
-				class="btn btn-danger fw-bold border-0 filter-btn"
-				type="button"
-				@click="emitFilter"
+				<option value="">Todos os tipos</option>
+				<option v-for="type in types" :key="type" :value="type">
+					{{ capitalize(type) }}
+				</option>
+			</select>
+
+			<select v-model="selectedRegion" 
+				class="form-select form-select-lg border-0 text-muted filter w-auto"
 			>
-				<i class="ti ti-pokeball fs-1"></i>
-			</button>
+				<option value="">Todas as regiões</option>
+				<option v-for="region in regions" :key="region" :value="region">
+					{{ capitalize(region) }}
+				</option>
+			</select>
+
 		</div>
 	</div>
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import { fetchTypeList, fetchPokedexList } from '../services/pokeapi'
 
 export default {
-	emits: ['filter'], // declara que esse componente pode emitir o evento 'filter'
+	emits: ['filter'],
 
 	setup(props, { emit }) {
-		// cria uma variável reativa pro valor do input (o texto da busca)
 		const searchQuery = ref('')
+		const selectedType = ref('')
+		const selectedRegion = ref('')
+		const types = ref([])
+		const regions = ref([])
 
-		// função chamada quando o botão de busca é clicado
-		// ela dispara o evento 'filter' pro componente pai, enviando o texto digitado
 		function emitFilter() {
-			// envia o valor atual do input pro pai
-			emit('filter', searchQuery.value)
+			emit('filter', {
+				query: searchQuery.value,
+				type: selectedType.value,
+				region: selectedRegion.value
+			})
 		}
 
-		// retorna as propriedades que vão ser usadas no template
+		onMounted(async () => {
+			types.value = await fetchTypeList()
+			regions.value = await fetchPokedexList()
+		})
+
 		return {
-			searchQuery,  // vinculado ao campo de texto (v-model)
-			emitFilter    // chamada quando o botão for clicado
+			searchQuery,
+			selectedType,
+			selectedRegion,
+			types,
+			regions,
+			emitFilter
+		}
+	},
+	methods: {
+		// deixa a primeira letra maiúscula
+		capitalize(value) {
+			if (!value) return ''
+			return value.charAt(0).toUpperCase() + value.slice(1)
 		}
 	}
 }
@@ -50,6 +94,6 @@ export default {
 <style scoped>
 /* estilo da caixa de filtro */
 .filter {
-	box-shadow: 0 0 20px rgba(138, 138, 138, 0.1);
+	box-shadow: 0 0 20px rgba(138, 138, 138, 0.20);
 }
 </style>
