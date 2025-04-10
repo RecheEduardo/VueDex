@@ -7,7 +7,7 @@
 				<img :src="pokemonImage" :alt="pokemon.name" class="pokemon-image" />
 			</div>
 			<!-- nome do pokemon -->
-			<p class="pokemon-name mb-0 display-4">
+			<p class="pokemon-name mb-0 display-4 text-muted">
 				{{ capitalize(pokemon.name) }}
 			</p>
 		</div>
@@ -108,15 +108,16 @@ export default {
 		width: 110px;
 	}
 	.pokemon-name{
-		font-size: 1.5rem;
+		font-size: 1.4rem;
 		font-weight: 400;
 	}
 	.input-group:hover .pokemon-name {
 	font-size: 1.75rem;
 	transform: translateX(5px);
 	}
-	.input-group{
-		padding-block: -100px !important;
+	.pokemon-card{
+		height: 100px !important;
+		overflow: hidden;
 	}
 }
 </style>

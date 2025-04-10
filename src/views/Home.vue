@@ -3,7 +3,7 @@
 		<h1 class="site-title display-1 mb-4 fw-bold text-muted text-center">Pokédex Interativa</h1>
 
 		<!-- componente de filtro que emite evento com nome digitado -->
-		<Filter @filter="handleUpdateFilters" />
+		<Filter @filter="handleUpdateFilters" class="border-bottom pb-4"/>
 
 		<!-- lista de pokemon: se estiver buscando, mostra so o resultado da busca -->
 		<ul class="pokemon-list list-group mb-5">

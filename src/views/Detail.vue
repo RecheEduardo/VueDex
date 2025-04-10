@@ -3,22 +3,22 @@
 		<!-- navegaçao entre pokemons sequencial -->
 		<div class="py-3 container d-flex justify-content-between border-bottom" v-if="pokemon">
 			<router-link :to="{ name: 'Home' }" 
-				class="btn btn-lg btn-secondary box-shadow"
+				class="btn btn-lg btn-outline-secondary"
 			>
 				Voltar
 			</router-link>
 			<div class="d-flex gap-3">
 				<router-link :to="{ name: 'Detail', params: { id: pokemon.id - 1 } }"
-					class="btn btn-lg btn-success fw-bold box-shadow"
+					class="btn btn-lg btn-danger fw-bold box-shadow"
 					v-if="pokemon.id > 1"
 				>
 					{{ pokemon.id - 1 }}
-					<i class="ti ti-player-track-prev"></i>
+					<i class="ti ti-pokeball"></i>
 				</router-link>
 				<router-link :to="{ name: 'Detail', params: { id: pokemon.id + 1 } }"
-					class="btn btn-lg btn-success fw-bold box-shadow"
+					class="btn btn-lg btn-danger fw-bold box-shadow"
 				>
-					<i class="ti ti-player-track-next"></i>
+					<i class="ti ti-pokeball"></i>
 					{{ pokemon.id + 1 }}
 				</router-link>
 			</div>
@@ -309,8 +309,8 @@ export default {
 
 @media (max-width: 1200px) {
 	.sprite-image{
-		min-width: 400px !important;
-		max-width: 400px !important;
+		min-width: 350px !important;
+		max-width: 350px !important;
 	}
 
 	.detail-container{
@@ -321,6 +321,9 @@ export default {
 @media (max-width: 990px){
 	.detail-container{
 		flex-direction: column;
+	}
+	.sprite-image{
+		margin-top: 2.5rem;
 	}
 	.details-div{
 		width: 100% !important;
