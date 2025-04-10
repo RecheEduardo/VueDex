@@ -3,20 +3,20 @@
 		<!-- navegaçao entre pokemons sequencial -->
 		<div class="py-3 container d-flex justify-content-between border-bottom" v-if="pokemon">
 			<router-link :to="{ name: 'Home' }" 
-				class="btn btn-lg btn-secondary"
+				class="btn btn-lg btn-secondary box-shadow"
 			>
 				Voltar
 			</router-link>
 			<div class="d-flex gap-3">
 				<router-link :to="{ name: 'Detail', params: { id: pokemon.id - 1 } }"
-					class="btn btn-lg btn-success fw-bold"
-					v-if="pokemon.id > 0"
+					class="btn btn-lg btn-success fw-bold box-shadow"
+					v-if="pokemon.id > 1"
 				>
 					{{ pokemon.id - 1 }}
 					<i class="ti ti-player-track-prev"></i>
 				</router-link>
 				<router-link :to="{ name: 'Detail', params: { id: pokemon.id + 1 } }"
-					class="btn btn-lg btn-success fw-bold"
+					class="btn btn-lg btn-success fw-bold box-shadow"
 				>
 					<i class="ti ti-player-track-next"></i>
 					{{ pokemon.id + 1 }}
@@ -153,7 +153,7 @@ export default {
 			error: null,                 // mensagem de erro
 			currentMovePage: 1,          // pagina atual de movimentos
 			movesPerPage: 4,             // quantos movimentos por pagina
-			selectedSprite: 'home.front_default' // sprite padrao selecionado
+			selectedSprite: 'official-artwork.front_default' // sprite padrao selecionado
 		}
 	},
 	computed: {
@@ -237,7 +237,7 @@ export default {
 				this.pokemon = null
 				this.evolutions = []
 				this.description = ''
-				this.selectedSprite = 'home.front_default'
+				this.selectedSprite = 'official-artwork.front_default'
 				this.currentMovePage = 1
 
 				const data = await fetchPokemonDetail(id)
