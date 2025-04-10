@@ -1,29 +1,52 @@
 <template>
 	<div class="home-container container pt-4">
-		<h1 class="site-title display-1 mb-4 fw-bold text-muted text-center">Pokédex Interativa</h1>
+
+		<!-- Motion asChild cria um elemento animado na View -->
+		<Motion asChild
+			:initial="{ y: -150, opacity: 0 }"
+			:animate="{ y: 0, opacity: 1 }" 
+			:transition="{ type: 'spring', stiffness: 100, damping: 25 }"
+		>
+			<h1 class="site-title display-1 mb-5 fw-bold text-muted text-center">
+				Pokédex Interativa
+			</h1>
+		</Motion>
+
 
 		<!-- componente de filtro que emite evento com nome digitado -->
-		<Filter @filter="handleUpdateFilters" class="border-bottom pb-4"/>
+		<Motion asChild
+			:initial="{ y: 150, opacity: 0 }"
+			:animate="{ y: 0, opacity: 1 }"
+			:transition="{ type: 'spring', stiffness: 100, damping: 25 }"
+		>
+     		<Filter @filter="handleUpdateFilters" class="border-bottom pb-4"/>
+   		</Motion>
 
-		<!-- lista de pokemon: se estiver buscando, mostra so o resultado da busca -->
+		<!-- lista de pokemon: se estiver buscando, mostra só o resultado da busca -->
 		<ul class="pokemon-list list-group mb-5">
-			<PokemonCard
-				v-for="(pokemon, index) in displayPokemons"
-				:key="index"
-				:pokemon="pokemon"
-			/>
+			<Motion asChild v-for="(pokemon, index) in displayPokemons" :key="index"
+				:initial="{ scale: 0.5, opacity: 0 }"
+				:whileInView="{ scale: 1, opacity: 1 }"
+				:transition="{ type: 'spring', stiffness: 200, damping: 25 }"
+				:inViewOptions="{ once: true, margin: '-10% 0px -10% 0px' }"
+			>
+				<PokemonCard :pokemon="pokemon"/>
+			</Motion>
 		</ul>
+
 
 		<!-- estado de loading -->
 		<div v-if="loading" class="loading fw-bold text-secondary align-items-center gap-3">
 			<i class="ti ti-pokeball"></i>
 			Carregando...
 		</div>
+
 	</div>
 </template>
 
 <script>
 import Filter from '../components/Filter.vue'
+import { Motion } from 'motion-v' // Lib para animações
 import PokemonCard from '../components/PokemonCard.vue'
 import {
 	fetchPokemonDetail,
@@ -36,7 +59,8 @@ export default {
 	name: 'Home',
 	components: {
 		Filter,
-		PokemonCard
+		PokemonCard,
+		Motion
 	},
 	data() {
 		return {
