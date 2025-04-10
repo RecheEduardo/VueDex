@@ -132,8 +132,17 @@
 
 		</div>
 
-		<div v-else-if="error" class="error">{{ error }}</div>
-		<div v-else class="loading">Carregando...</div>
+		<div v-else-if="error" class="error">
+			<button class="btn btn-danger fs-3 fw-bold mx-3">
+				<i class="ti ti-exclamation-circle"></i>
+				{{ error }}
+			</button>
+		</div>
+
+		<div v-else class="loading fw-bold text-secondary align-items-center gap-3">
+			<i class="ti ti-pokeball"></i>
+			Carregando...
+		</div>
 	</div>
 </template>
 
@@ -290,7 +299,6 @@ export default {
 .pokemon-description{
 	font-size: 2.5rem;
 }
-
 .details-div{
 	width: 45% !important;
 }
@@ -305,6 +313,13 @@ export default {
 .type-icon {
   width: 48px;
   height: 48px;
+}
+.error, .loading {
+	font-size: 2.5rem;
+	height: 100svh !important;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 @media (max-width: 1200px) {
@@ -333,6 +348,11 @@ export default {
 @media (max-width: 426px){
 	.evo-list{
 		flex-direction: column;
+	}
+
+	.error .loading{
+		font-size: 5rem !important;
+		height: 100svh !important;
 	}
 }
 </style>

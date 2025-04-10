@@ -15,7 +15,10 @@
 		</ul>
 
 		<!-- estado de loading -->
-		<div v-if="loading" class="loading">Carregando...</div>
+		<div v-if="loading" class="loading fw-bold text-secondary align-items-center gap-3">
+			<i class="ti ti-pokeball"></i>
+			Carregando...
+		</div>
 	</div>
 </template>
 
@@ -153,5 +156,12 @@ export default {
 	.site-title{
 		font-size: 2.25rem;
 	}
+}
+
+.loading {
+	font-size: 2.5rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 </style>
