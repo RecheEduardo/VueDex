@@ -6,7 +6,7 @@
         <Filter @filter="handleUpdateFilters" />
 
         <!-- lista de pokemon: se estiver buscando, mostra so o resultado da busca -->
-        <ul class="pokemon-list list-group">
+        <ul class="pokemon-list list-group mb-5">
             <PokemonCard
                 v-for="(pokemon, index) in displayPokemons"
                 :key="index"
@@ -22,7 +22,7 @@
 <script>
 import Filter from '../components/Filter.vue'
 import PokemonCard from '../components/PokemonCard.vue'
-import { fetchPokemonDetail } from '../services/pokeapi'
+import { fetchPokemonDetail, fetchAllPokemons } from '../services/pokeapi'
 
 export default {
     name: 'Home',
@@ -60,14 +60,42 @@ export default {
             this.offset += this.limit
         },
         // chamado quando o filtro e usado
-        async handleUpdateFilters(name) {
-            const trimmedName = name.trim().toLowerCase()
-            if (trimmedName) {
-                this.searchMode = true
-                await this.fetchSearchResult(trimmedName)
-            } else {
+        async handleUpdateFilters(query) {
+            // limpa o texto do pokemon e coloca tudo em minusculo
+            const term = query.trim().toLowerCase()
+
+            // se o campo estiver vazio, sai do modo de busca e limpa os resultados
+            if (!term) {
                 this.searchMode = false
                 this.searchResults = []
+                return
+            }
+
+            // ativa o modo de busca e liga o loading
+            this.searchMode = true
+            this.loading = true
+
+            try {
+                // busca todos os pokemons da api (só os nomes e urls, bem rapido)
+                const all = await fetchAllPokemons()
+                // filtra os que contem o texto digitado em qualquer parte do nome
+                const matches = all.filter(p => p.name.includes(term))
+                
+                const details = await Promise.all(
+                    // busca os dados completos de cada pokemon que bateu no filtro
+                    matches.map(p => fetchPokemonDetail(p.name))
+                )
+
+                // salva os resultados pra exibir na tela
+                this.searchResults = details
+
+            } catch (err) {
+                console.error('erro na busca:', err)
+                // se der algum erro mostra no console e limpa os resultados
+                this.searchResults = []
+            } finally {
+                // desliga o loading dando certo ou nao
+                this.loading = false
             }
         },
         // busca um unico pokemon pelo nome ou ID

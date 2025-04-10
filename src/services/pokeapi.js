@@ -51,3 +51,11 @@ export function fetchEvolutionChain(url) {
     return axios.get(url)
         .then(response => response.data)
 }
+
+// busca a lista completa de pokemons (nome + url)
+export function fetchAllPokemons() {
+    // limit alto pra garantir que traga todos os pokemon
+    return axios
+        .get(`${API_BASE}pokemon?offset=0&limit=2000`)
+        .then(response => response.data.results)
+}
