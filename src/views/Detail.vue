@@ -115,16 +115,18 @@
 				</section>
 
 				<!-- lista de evolucoes, se existir -->
-				<section class="text-center py-4" v-if="evolutions.length">
-					<h2 class="mb-4 display-5">Evoluções</h2>
-					<router-link
-						v-for="(evo, idx) in evolutions"
-						:key="idx"
-						:to="{ name: 'Detail', params: { id: evo.name } }"
-						class="badge box-shadow fs-4 text-bg-success mx-2 text-decoration-none"
-					>
-						{{ capitalize(evo.name) }}
-					</router-link>
+				<section class="py-4" v-if="evolutions.length">
+					<h2 class="text-center mb-4 display-5">Evoluções</h2>
+					<div class="evo-list d-flex justify-content-center gap-3 flex-wrap">
+						<router-link
+							v-for="(evo, idx) in evolutions"
+							:key="idx"
+							:to="{ name: 'Detail', params: { id: evo.name } }"
+							class="badge box-shadow fs-4 text-bg-success text-decoration-none"
+						>
+							{{ capitalize(evo.name) }}
+						</router-link>
+					</div>
 				</section>
 			</section>
 
@@ -284,6 +286,11 @@ export default {
 .detail-container{
 	gap: 10rem;
 }
+
+.pokemon-description{
+	font-size: 2.5rem;
+}
+
 .details-div{
 	width: 45% !important;
 }
@@ -298,5 +305,31 @@ export default {
 .type-icon {
   width: 48px;
   height: 48px;
+}
+
+@media (max-width: 1200px) {
+	.sprite-image{
+		min-width: 400px !important;
+		max-width: 400px !important;
+	}
+
+	.detail-container{
+		gap: 5rem;
+	}
+}
+
+@media (max-width: 990px){
+	.detail-container{
+		flex-direction: column;
+	}
+	.details-div{
+		width: 100% !important;
+	}
+} 
+
+@media (max-width: 426px){
+	.evo-list{
+		flex-direction: column;
+	}
 }
 </style>
