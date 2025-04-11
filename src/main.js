@@ -4,6 +4,7 @@ import App from './App.vue';
 import store from './store'; // state manager com vueX
 import i18n from './i18n' // internacionalização
 
+import './assets/animations/animations.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap';
 

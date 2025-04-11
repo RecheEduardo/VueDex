@@ -17,7 +17,7 @@
 
 					<div class="d-flex gap-3">
 						<router-link :to="{ name: 'Detail', params: { id: pokemon.id - 1 } }"
-							class="btn btn-lg btn-danger fw-bold box-shadow"
+							class="btn btn-lg btn-danger fw-bold box-shadow downScale"
 							v-if="pokemon.id > 1"
 						>
 							{{ pokemon.id - 1 }}
@@ -25,7 +25,7 @@
 						</router-link>
 
 						<router-link :to="{ name: 'Detail', params: { id: pokemon.id + 1 } }"
-							class="btn btn-lg btn-danger fw-bold box-shadow"
+							class="btn btn-lg btn-danger fw-bold box-shadow downScale"
 						>
 							<i class="ti ti-pokeball"></i>
 							{{ pokemon.id + 1 }}
@@ -153,19 +153,21 @@
 							
 							<div class="row row-cols-2 g-3">
 								<div v-for="(move, idx) in paginatedMoves" :key="`move-${idx}`" class="col">
-									<div class="card box-shadow border-0 p-3 text-muted text-center fs-5 fw-bold">
+									<div class="card box-shadow downScale border-0 p-3 text-muted text-center fs-5 fw-bold user-select-none">
 										{{ capitalize(move) }}
 									</div>
 								</div>
 							</div>
 							<div class="pagination-controls d-flex justify-content-between mt-2">
-								<button @click="prevPage" :disabled="currentMovePage === 1" class="btn box-shadow fw-bold btn-secondary">
+								<button @click="prevPage" :disabled="currentMovePage === 1" 
+									class="btn box-shadow fw-bold btn-secondary upScale"
+								>
 									{{ $t('previous') }}
 								</button>
 								<button
 									@click="nextPage"
 									:disabled="currentMovePage === totalMovePages"
-									class="btn box-shadow fw-bold btn-primary"
+									class="btn box-shadow fw-bold btn-primary upScale"
 								>
 									{{ $t('next') }}
 								</button>
@@ -185,7 +187,7 @@
 								<span
 									v-for="(game, idx) in pokemon.gameIndices"
 									:key="idx"
-									class="badge box-shadow text-bg-secondary"
+									class="badge box-shadow upScale user-select-none text-bg-secondary"
 								>
 									{{ capitalize(game) }}
 								</span>
@@ -230,9 +232,9 @@
 				>
 					<!-- switcher de idioma -->
 					<div class="container d-flex w-100 justify-content-end gap-3 pt-3 border-top">
-						<button @click="changeLocale('pt')" class="btn flag flag-sm flag-country-br"></button>
-						<button @click="changeLocale('en')" class="btn flag flag-sm flag-country-us"></button>
-						<button @click="changeLocale('es')" class="btn flag flag-sm flag-country-es"></button>
+						<button @click="changeLocale('pt')" class="btn flag flag-sm flag-country-br downScale"></button>
+						<button @click="changeLocale('en')" class="btn flag flag-sm flag-country-us downScale"></button>
+						<button @click="changeLocale('es')" class="btn flag flag-sm flag-country-es downScale"></button>
 					</div>
 				</Motion>
 				</section>

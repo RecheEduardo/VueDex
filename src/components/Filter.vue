@@ -19,7 +19,7 @@
 					>
 					<!-- botao que dispara o filtro -->
 					<button
-						class="btn btn-danger fw-bold border-0 filter-btn"
+						class="btn btn-danger fw-bold border-0 filter-btn downScale"
 						type="button"
 						@click="emitFilter"
 					>

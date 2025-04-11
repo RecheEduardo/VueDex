@@ -1,0 +1,5 @@
+.upScale { transition: .25s !important;}
+.upScale:hover {transition: .25s; scale: 1.15 !important;}
+
+.downScale { transition: .25s !important;}
+.downScale:hover {transition: .25s; scale: 0.9 !important;}

@@ -8,9 +8,9 @@
 		>
 			<!-- switcher de idioma -->
 			<div class="d-flex gap-2 justify-content-end pb-1">
-				<button @click="changeLocale('pt')" class="btn flag flag-sm flag-country-br"></button>
-				<button @click="changeLocale('en')" class="btn flag flag-sm flag-country-us"></button>
-				<button @click="changeLocale('es')" class="btn flag flag-sm flag-country-es"></button>
+				<button @click="changeLocale('pt')" class="btn flag flag-sm flag-country-br downScale"></button>
+				<button @click="changeLocale('en')" class="btn flag flag-sm flag-country-us downScale"></button>
+				<button @click="changeLocale('es')" class="btn flag flag-sm flag-country-es downScale"></button>
 			</div>
 		</Motion>
 
