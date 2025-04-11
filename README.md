@@ -12,9 +12,9 @@
 
 Framework JavaScript progressivo utilizado para construir a interface do projeto. O Vue.js 3 oferece reatividade avançada, composição de componentes e uma curva de aprendizado amigável, ideal para criar interfaces ricas com facilidade.
 
-## <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" height="45" />
+## <img src="https://img.shields.io/badge/JavaScript-F7DF1E.svg?style=for-the-badge&logo=JavaScript&logoColor=black" height="45" />
 
-Linguagem que adiciona tipagem estática ao JavaScript, tornando o código mais seguro, legível e fácil de manter. Utilizada em todo o projeto para garantir previsibilidade e escalabilidade da aplicação.
+Na vuedex, o javascript é usado junto com typescript pra controlar o comportamento da aplicação, buscar e tratar os dados da pokéapi, gerenciar o estado global com vuex, controlar a navegação com vue router e aplicar animações com motion one. ele também é responsável por lidar com eventos, lógica de exibição, filtros, e interações nos componentes vue, garantindo que a pokédex funcione de forma dinâmica e responsiva.
 
 ## <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white" height="45" />
 
