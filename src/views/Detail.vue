@@ -193,21 +193,48 @@
 						</section>
 					</Motion>
 
-
-					<!-- lista de evolucoes, se existir -->
-					<section class="py-4" v-if="evolutions.length">
-						<h2 class="text-center mb-4 display-5">{{ $t('evolutions') }}</h2>
-						<div class="evo-list d-flex justify-content-center gap-3 flex-wrap">
-							<router-link
-								v-for="(evo, idx) in evolutions"
-								:key="idx"
-								:to="{ name: 'Detail', params: { id: evo.name } }"
-								class="badge box-shadow fs-4 text-bg-success text-decoration-none"
-							>
-								{{ capitalize(evo.name) }}
-							</router-link>
-						</div>
-					</section>
+					<Motion asChild
+						v-if="evolutions.length"
+						:initial="{ y: 80, opacity: 0 }"
+						:animate="{ y: 0, opacity: 1 }" 
+						:transition="{ type: 'spring', stiffness: 125, damping: 15, delay: 2.25 }"
+					>
+						<!-- lista de evolucoes, se existir -->
+						<section class="py-4">
+							<h2 class="text-center mb-4 display-5">{{ $t('evolutions') }}</h2>
+							<div class="evo-list d-flex justify-content-center gap-3 flex-wrap">
+								<Motion
+									asChild
+									v-for="(evo, idx) in evolutions"
+									:key="idx"
+									:initial="{ opacity: 0, y: 20 }"
+									:whileInView="{ opacity: 1, y: 0 }"
+									:transition="{ type: 'spring', stiffness: 75, damping: 25}"
+									:inViewOptions="{ once: true, margin: '-10% 0px -10% 0px' }"
+								>
+									<router-link
+										:to="{ name: 'Detail', params: { id: evo.name } }"
+										class="badge box-shadow fs-4 text-bg-success text-decoration-none"
+									>
+										{{ capitalize(evo.name) }}
+									</router-link>
+								</Motion>
+							</div>
+						</section>
+					</Motion>
+					
+				<Motion asChild
+					:initial="{ opacity: 0 }"
+					:animate="{ opacity: 1 }" 
+					:transition="{ type: 'spring', stiffness: 75, damping: 25, delay: 1.5 }"
+				>
+					<!-- switcher de idioma -->
+					<div class="container d-flex w-100 justify-content-end gap-3 pt-3 border-top">
+						<button @click="changeLocale('pt')" class="btn flag flag-sm flag-country-br"></button>
+						<button @click="changeLocale('en')" class="btn flag flag-sm flag-country-us"></button>
+						<button @click="changeLocale('es')" class="btn flag flag-sm flag-country-es"></button>
+					</div>
+				</Motion>
 				</section>
 			</Motion>
 		</div>
@@ -358,6 +385,10 @@ export default {
 				console.error(err)
 				this.error = 'Erro ao carregar os dados do Pokemon.'
 			}
+		},
+		// troca o idioma atual do site
+		changeLocale(lang) {
+			this.$i18n.locale = lang
 		}
 	},
 	components: {

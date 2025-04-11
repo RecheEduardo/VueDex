@@ -1,6 +1,19 @@
 <template>
 	<div class="home-container container pt-4">
 
+		<Motion asChild
+			:initial="{ y: -250, opacity: 0 }"
+			:animate="{ y: 0, opacity: 1 }" 
+			:transition="{ type: 'spring', stiffness: 75, damping: 25 }"
+		>
+			<!-- switcher de idioma -->
+			<div class="d-flex gap-2 justify-content-end pb-1">
+				<button @click="changeLocale('pt')" class="btn flag flag-sm flag-country-br"></button>
+				<button @click="changeLocale('en')" class="btn flag flag-sm flag-country-us"></button>
+				<button @click="changeLocale('es')" class="btn flag flag-sm flag-country-es"></button>
+			</div>
+		</Motion>
+
 		<!-- essa div Motion se repetirá por todo código, 
 				pois ela engloba as animaçoes da lib! -->
 		<Motion asChild
@@ -8,7 +21,7 @@
 			:animate="{ y: 0, opacity: 1 }" 
 			:transition="{ type: 'spring', stiffness: 75, damping: 25 }"
 		>
-			<h1 class="site-title display-1 mb-5 fw-bold text-muted text-center">
+			<h1 class="site-title display-1 my-2 fw-bold text-muted text-center">
 				{{ $t('siteTitle') }}
 			</h1>
 		</Motion>
@@ -169,6 +182,10 @@ export default {
 			if (scrollTop + clientHeight >= scrollHeight - 5 && !this.loading && !this.searchMode) {
 				this.fetchPokemons()
 			}
+		},
+		// troca o idioma atual do site
+		changeLocale(lang) {
+			this.$i18n.locale = lang
 		}
 	},
 	mounted() {
