@@ -1,0 +1,22 @@
+{
+    "back": "Volver",
+    "siteTitle": "Pokédex Interactiva",
+    "searchPlaceholder": "Buscar Pokémon...",
+    "allTypes": "Todos los tipos",
+    "allRegions": "Todas las regiones",
+    "sprite": "Sprite",
+    "description": "Descripción",
+    "loadingDescription": "Cargando descripción...",
+    "moves": "Movimientos",
+    "pageOf": "Página {current} de {total}",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "games": "Juegos",
+    "evolutions": "Evoluciones",
+    "loading": "Cargando...",
+    "front_default": "Frontal Predeterminado",
+    "front_shiny": "Frontal Shiny",
+    "back_default": "Trasero Predeterminado",
+    "back_shiny": "Trasero Shiny"
+}
+  

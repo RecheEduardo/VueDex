@@ -14,7 +14,7 @@
 					<input
 						type="text"
 						v-model="searchQuery"
-						placeholder="Buscar Pokémon..."
+						:placeholder="$t('searchPlaceholder')"
 						class="form-control pokemon-input border-0 fs-2"
 					>
 					<!-- botao que dispara o filtro -->
@@ -39,11 +39,12 @@
 				<select v-model="selectedType" 
 					class="form-select form-select-lg border-0 text-muted filter w-auto"
 				>
-					<option value="">Todos os tipos</option>
+					<option value="">{{ $t('allTypes') }}</option>
 					
 					<option v-for="type in types" :key="type" :value="type">
 						{{ capitalize(type) }}
 					</option>
+
 				</select>
 			</Motion>
 
@@ -55,7 +56,7 @@
 				<select v-model="selectedRegion" 
 					class="form-select form-select-lg border-0 text-muted filter w-auto"
 				>
-					<option value="">Todas as regiões</option>
+					<option value="">{{ $t('allRegions') }}</option>
 
 					<option v-for="region in regions" :key="region" :value="region">
 						{{ capitalize(region) }}

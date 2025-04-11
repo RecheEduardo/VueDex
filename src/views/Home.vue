@@ -9,7 +9,7 @@
 			:transition="{ type: 'spring', stiffness: 75, damping: 25 }"
 		>
 			<h1 class="site-title display-1 mb-5 fw-bold text-muted text-center">
-				Pokédex Interativa
+				{{ $t('siteTitle') }}
 			</h1>
 		</Motion>
 
@@ -45,7 +45,7 @@
 		<!-- estado de loading -->
 		<div v-if="loading" class="loading fw-bold text-secondary align-items-center gap-3">
 			<i class="ti ti-pokeball"></i>
-			Carregando...
+			{{ $t('loading') }}
 		</div>
 
 	</div>

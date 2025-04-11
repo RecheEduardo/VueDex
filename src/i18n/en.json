@@ -1,0 +1,22 @@
+{
+    "back": "Back",
+    "siteTitle": "Interactive Pokédex",
+    "searchPlaceholder": "Search Pokémon...",
+    "allTypes": "All Types",
+    "allRegions": "All Regions",
+    "sprite": "Sprite",
+    "description": "Description",
+    "loadingDescription": "Loading description...",
+    "moves": "Moves",
+    "pageOf": "Page {current} of {total}",
+    "previous": "Previous",
+    "next": "Next",
+    "games": "Games",
+    "evolutions": "Evolutions",
+    "loading": "Loading...",
+    "front_default": "Front Default",
+    "front_shiny": "Front Shiny",
+    "back_default": "Back Default",
+    "back_shiny": "Back Shiny"
+}
+  

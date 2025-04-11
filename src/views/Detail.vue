@@ -12,7 +12,7 @@
 				<div class="d-flex justify-content-between border-bottom py-3">
 
 					<router-link :to="{ name: 'Home' }" class="btn btn-lg btn-outline-secondary">
-						Voltar
+						{{ $t('back') }}
 					</router-link>
 
 					<div class="d-flex gap-3">
@@ -93,7 +93,7 @@
 					:transition="{ type: 'spring', stiffness: 100, damping: 25, delay: 1 }"
 				>
 					<!-- selecao de sprite dinamica -->
-					<h2 class="fw-bold text-muted mt-3">Sprite</h2>
+					<h2 class="fw-bold text-muted mt-3">{{ $t('sprite') }}</h2>
 				</Motion>
 
 				<div class="sprite-select">
@@ -131,8 +131,8 @@
 					>
 						<!-- nova aba de descrição -->
 						<section class="section border-bottom pb-4">
-							<h2 class="fs-1 text-muted fw-bold mb-3">Descrição em inglês</h2>
-							<p v-if="loadingDescription">Carregando descrição...</p>
+							<h2 class="fs-1 text-muted fw-bold mb-3">{{ $t('description') }}</h2>
+							<p v-if="loadingDescription">{{ $t('loadingDescription') }}</p>
 							<p v-else class="text-center fs-5 mb-0">{{ description }}</p>
 						</section>
 					</Motion>
@@ -144,8 +144,13 @@
 					>
 						<!-- movimentos com paginacao -->
 						<section class="section d-flex flex-column gap-3 border-bottom py-4">
-							<h2 class="fs-1 text-muted fw-bold mb-0">Movimentos</h2>
-							<span class="text-end text-muted">Página {{ currentMovePage }} de {{ totalMovePages }}</span>
+
+							<h2 class="fs-1 text-muted fw-bold mb-0">{{ $t('moves') }}</h2>
+
+							<span class="text-end text-muted">
+								{{ $t('pageOf', { current: currentMovePage, total: totalMovePages }) }}
+							</span>
+							
 							<div class="row row-cols-2 g-3">
 								<div v-for="(move, idx) in paginatedMoves" :key="`move-${idx}`" class="col">
 									<div class="card box-shadow border-0 p-3 text-muted text-center fs-5 fw-bold">
@@ -155,14 +160,14 @@
 							</div>
 							<div class="pagination-controls d-flex justify-content-between mt-2">
 								<button @click="prevPage" :disabled="currentMovePage === 1" class="btn box-shadow fw-bold btn-secondary">
-									Anterior
+									{{ $t('previous') }}
 								</button>
 								<button
 									@click="nextPage"
 									:disabled="currentMovePage === totalMovePages"
 									class="btn box-shadow fw-bold btn-primary"
 								>
-									Proximo
+									{{ $t('next') }}
 								</button>
 							</div>
 						</section>
@@ -175,7 +180,7 @@
 					>
 						<!-- lista de jogos -->
 						<section v-if="pokemon.gameIndices.length" class="section border-bottom py-2">
-							<h2 class="display-5">Jogos</h2>
+							<h2 class="display-5">{{ $t('games') }}</h2>
 							<div class="d-flex flex-wrap gap-2 my-4">
 								<span
 									v-for="(game, idx) in pokemon.gameIndices"
@@ -191,7 +196,7 @@
 
 					<!-- lista de evolucoes, se existir -->
 					<section class="py-4" v-if="evolutions.length">
-						<h2 class="text-center mb-4 display-5">Evoluções</h2>
+						<h2 class="text-center mb-4 display-5">{{ $t('evolutions') }}</h2>
 						<div class="evo-list d-flex justify-content-center gap-3 flex-wrap">
 							<router-link
 								v-for="(evo, idx) in evolutions"
@@ -216,7 +221,7 @@
 
 		<div v-else class="loading fw-bold text-secondary align-items-center gap-3">
 			<i class="ti ti-pokeball"></i>
-			Carregando...
+			{{ $t('loading') }}
 		</div>
 	</div>
 </template>
