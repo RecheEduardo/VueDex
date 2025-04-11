@@ -216,7 +216,7 @@
 								>
 									<router-link
 										:to="{ name: 'Detail', params: { id: evo.name } }"
-										class="badge box-shadow fs-4 text-bg-success text-decoration-none"
+										class="badge box-shadow fs-4 text-bg-success text-decoration-none downScale"
 									>
 										{{ capitalize(evo.name) }}
 									</router-link>
