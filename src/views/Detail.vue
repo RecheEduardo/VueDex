@@ -30,106 +30,159 @@
 			<section class="section img-div d-flex flex-column align-items-center">
 
 				<div class="sprite-display">
-					<h3 class="text-muted text-center mb-2">#{{ pokemon.id }}</h3>
-					<h1 class="text-center display-3 fw-bold mb-4">{{ capitalize(pokemon.name) }}</h1>
-					<div class="pokemon-types d-flex gap-2 justify-content-center" v-if="pokemon.types.length">
+					<Motion asChild
+							:initial="{ y: 50, opacity: 0 }"
+							:animate="{ y: 0, opacity: 1 }" 
+							:transition="{ type: 'spring', stiffness: 100, damping: 25, delay: 0.25 }"
+					>
+						<h3 class="text-muted text-center mb-2">#{{ pokemon.id }}</h3>
+					</Motion>
+
+					<Motion asChild
+							:initial="{ scale: 0, opacity: 0 }"
+							:animate="{ scale: 1, opacity: 1 }" 
+							:transition="{ type: 'spring', stiffness: 100, damping: 25, delay: 0.50 }"
+					>
+						<h1 class="text-center display-3 fw-bold mb-4">{{ capitalize(pokemon.name) }}</h1>
+					</Motion>
+
+					<div class="pokemon-types d-flex gap-2 justify-content-center" v-if="pokemon.types.length" >
+						<Motion
+							v-for="(type, index) in pokemon.types"
+							:key="type"
+							:initial="{ opacity: 0, scale: 0 }"
+							:animate="{ opacity: 1, scale: 1 }"
+							:transition="{ type: 'spring', stiffness: 100, damping: 25, delay: 0.50 }"
+							asChild
+						>
+							<img
+								:src="getTypeIcon(type)"
+								:alt="type"
+								class="type-icon"
+							/>
+						</Motion>
+					</div>
+
+					<Motion asChild
+							:initial="{ scale: 0, opacity: 0 }"
+							:animate="{ scale: 1, opacity: 1 }" 
+							:transition="{ type: 'spring', stiffness: 100, damping: 25, delay: 0.75 }"
+					>
 						<img
-						v-for="type in pokemon.types"
-						:key="type"
-						:src="getTypeIcon(type)"
-						:alt="type"
-						class="type-icon"
+							:src="spriteUrl"
+							:alt="pokemon.name + ' - ' + formatLabel(selectedSprite)"
+							class="sprite-image"
 						/>
-					</div>
-					<img
-						:src="spriteUrl"
-						:alt="pokemon.name + ' - ' + formatLabel(selectedSprite)"
-						class="sprite-image"
-					/>
+					</Motion>
 				</div>
 
-				<!-- selecao de sprite dinamica -->
-				<h2 class="fw-bold text-muted mt-3">Sprite</h2>
+				<Motion asChild
+					:initial="{ y: 50, opacity: 0 }"
+					:animate="{ y: 0, opacity: 1 }" 
+					:transition="{ type: 'spring', stiffness: 100, damping: 25, delay: 1 }"
+				>
+					<!-- selecao de sprite dinamica -->
+					<h2 class="fw-bold text-muted mt-3">Sprite</h2>
+				</Motion>
 
-				<div class="sprite-select">
-					<select v-model="selectedSprite" class="form-select w-auto border-0 box-shadow text-muted mt-3">
-						<option
-							v-for="(url, key) in validSprites"
-							:key="key"
-							:value="key"
+					<div class="sprite-select">
+						<Motion asChild
+							:initial="{ y: 50, opacity: 0 }"
+							:animate="{ y: 0, opacity: 1 }" 
+							:transition="{ type: 'spring', stiffness: 100, damping: 25, delay: 1.25 }"
 						>
-							{{ formatLabel(key) }}
-						</option>
-					</select>
-				</div>
-				
+							<select v-model="selectedSprite" class="form-select w-auto border-0 box-shadow text-muted mt-3">
+								<option
+									v-for="(url, key) in validSprites"
+									:key="key"
+									:value="key"
+								>
+									{{ formatLabel(key) }}
+								</option>
+							</select>
+						</Motion>
+					</div>
 			</section>
 
-			<!-- detalhes do pokemon da tela -->
-			<section class="section details-div d-flex flex-column">
+			<Motion asChild
+				:initial="{ y: 50, opacity: 0 }"
+				:animate="{ y: 0, opacity: 1 }" 
+				:transition="{ type: 'spring', stiffness: 100, damping: 25, delay: 1.25 }"
+			>
+				<!-- detalhes do pokemon da tela -->
+				<section class="section details-div d-flex flex-column">
 
-				<!-- nova aba de descrição -->
-				<section class="section border-bottom pb-4">
-					<h2 class="fs-1 text-muted fw-bold mb-3">Descrição em inglês</h2>
-					<p v-if="loadingDescription">Carregando descrição...</p>
-					<p v-else class="text-center fs-5">{{ description }}</p>
-				</section>
+					<!-- nova aba de descrição -->
+					<section class="section border-bottom pb-4">
+						<h2 class="fs-1 text-muted fw-bold mb-3">Descrição em inglês</h2>
+						<p v-if="loadingDescription">Carregando descrição...</p>
+						<p v-else class="text-center fs-5">{{ description }}</p>
+					</section>
 
-				<!-- movimentos com paginacao -->
-				<section class="section d-flex flex-column gap-3 border-bottom py-4">
-					<h2 class="fs-1 text-muted fw-bold mb-0">Movimentos</h2>
-					<span class="text-end text-muted">Página {{ currentMovePage }} de {{ totalMovePages }}</span>
-					<div class="row row-cols-2 g-3">
-						<div v-for="(move, idx) in paginatedMoves" :key="`move-${idx}`" class="col">
-							<div class="card box-shadow border-0 p-3 text-muted text-center fs-5 fw-bold">
-								{{ capitalize(move) }}
-							</div>
+					<!-- movimentos com paginacao -->
+					<section class="section d-flex flex-column gap-3 border-bottom py-4">
+						<h2 class="fs-1 text-muted fw-bold mb-0">Movimentos</h2>
+						<span class="text-end text-muted">Página {{ currentMovePage }} de {{ totalMovePages }}</span>
+						<div class="row row-cols-2 g-3">
+							<div v-for="(move, idx) in paginatedMoves" :key="`move-${idx}`" class="col">
+								<Motion
+									v-for="(type, index) in pokemon.types"
+									:key="type"
+									:initial="{ opacity: 0, scale: 0 }"
+									:animate="{ opacity: 1, scale: 1 }"
+									:transition="{ type: 'spring', stiffness: 100, damping: 25, delay: 0.50 }"
+									asChild
+									>
+									<div class="card box-shadow border-0 p-3 text-muted text-center fs-5 fw-bold">
+										{{ capitalize(move) }}
+									</div>
+								</Motion>
+								</div>
 						</div>
-					</div>
-					<div class="pagination-controls d-flex justify-content-between mt-2">
-						<button @click="prevPage" :disabled="currentMovePage === 1" class="btn box-shadow fw-bold btn-secondary">
-							Anterior
-						</button>
-						<button
-							@click="nextPage"
-							:disabled="currentMovePage === totalMovePages"
-							class="btn box-shadow fw-bold btn-primary"
-						>
-							Proximo
-						</button>
-					</div>
-				</section>
+						<div class="pagination-controls d-flex justify-content-between mt-2">
+							<button @click="prevPage" :disabled="currentMovePage === 1" class="btn box-shadow fw-bold btn-secondary">
+								Anterior
+							</button>
+							<button
+								@click="nextPage"
+								:disabled="currentMovePage === totalMovePages"
+								class="btn box-shadow fw-bold btn-primary"
+							>
+								Proximo
+							</button>
+						</div>
+					</section>
 
-				<!-- lista de jogos -->
-				<section v-if="pokemon.gameIndices.length" class="section border-bottom py-2">
-					<h2 class="display-5">Jogos</h2>
-					<div class="d-flex flex-wrap gap-2 my-4">
-						<span
-							v-for="(game, idx) in pokemon.gameIndices"
-							:key="idx"
-							class="badge box-shadow text-bg-secondary"
-						>
-							{{ capitalize(game) }}
-						</span>
-					</div>
-				</section>
+					<!-- lista de jogos -->
+					<section v-if="pokemon.gameIndices.length" class="section border-bottom py-2">
+						<h2 class="display-5">Jogos</h2>
+						<div class="d-flex flex-wrap gap-2 my-4">
+							<span
+								v-for="(game, idx) in pokemon.gameIndices"
+								:key="idx"
+								class="badge box-shadow text-bg-secondary"
+							>
+								{{ capitalize(game) }}
+							</span>
+						</div>
+					</section>
 
-				<!-- lista de evolucoes, se existir -->
-				<section class="py-4" v-if="evolutions.length">
-					<h2 class="text-center mb-4 display-5">Evoluções</h2>
-					<div class="evo-list d-flex justify-content-center gap-3 flex-wrap">
-						<router-link
-							v-for="(evo, idx) in evolutions"
-							:key="idx"
-							:to="{ name: 'Detail', params: { id: evo.name } }"
-							class="badge box-shadow fs-4 text-bg-success text-decoration-none"
-						>
-							{{ capitalize(evo.name) }}
-						</router-link>
-					</div>
+					<!-- lista de evolucoes, se existir -->
+					<section class="py-4" v-if="evolutions.length">
+						<h2 class="text-center mb-4 display-5">Evoluções</h2>
+						<div class="evo-list d-flex justify-content-center gap-3 flex-wrap">
+							<router-link
+								v-for="(evo, idx) in evolutions"
+								:key="idx"
+								:to="{ name: 'Detail', params: { id: evo.name } }"
+								class="badge box-shadow fs-4 text-bg-success text-decoration-none"
+							>
+								{{ capitalize(evo.name) }}
+							</router-link>
+						</div>
+					</section>
 				</section>
-			</section>
-
+			</Motion>
 		</div>
 
 		<div v-else-if="error" class="error">
@@ -152,6 +205,8 @@ import {
 	fetchPokemonSpecies,
 	fetchEvolutionChain
 } from '../services/pokeapi'
+
+import { Motion } from 'motion-v' // Lib para animações
 
 export default {
 	name: 'Detail',
@@ -277,6 +332,9 @@ export default {
 				this.error = 'Erro ao carregar os dados do Pokemon.'
 			}
 		}
+	},
+	components: {
+		Motion
 	},
 	async mounted() {
 		// pega id do pokemon da rota
