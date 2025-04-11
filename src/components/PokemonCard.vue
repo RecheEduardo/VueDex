@@ -74,7 +74,7 @@ export default {
 
 .input-group {
 	cursor: pointer;
-	box-shadow: 0 0 20px rgba(138, 138, 138, 0.1);
+	box-shadow: 0 0 20px rgba(138, 138, 138, 0.2);
 }
 
 .pokemon-card {

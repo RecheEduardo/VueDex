@@ -1,11 +1,13 @@
 <template>
 	<div>
-		<!-- input com botão de busca -->
+		<!-- essa div Motion se repetirá por todo código, 
+			pois ela engloba as animaçoes da lib! -->
 		<Motion asChild
 			:initial="{ scale: 0.5, opacity: 0 }"
 			:animate="{ scale: 1, opacity: 1 }" 
-			:transition="{ type: 'spring', stiffness: 100, damping: 25 }"
+			:transition="{ type: 'spring', stiffness: 100, damping: 15 }"
 		>
+			<!-- input com botão de busca -->
 			<div class="filter rounded my-4">
 				<div class="input-group input-group-lg mb-2">
 					<!-- campo de texto vinculado ao estado local -->
@@ -38,6 +40,7 @@
 					class="form-select form-select-lg border-0 text-muted filter w-auto"
 				>
 					<option value="">Todos os tipos</option>
+					
 					<option v-for="type in types" :key="type" :value="type">
 						{{ capitalize(type) }}
 					</option>
@@ -50,16 +53,16 @@
 				:transition="{ type: 'spring', stiffness: 100, damping: 25, delay: 0.5 }"
 			>
 				<select v-model="selectedRegion" 
-				class="form-select form-select-lg border-0 text-muted filter w-auto"
-			>
-				<option value="">Todas as regiões</option>
-				<option v-for="region in regions" :key="region" :value="region">
-					{{ capitalize(region) }}
-				</option>
+					class="form-select form-select-lg border-0 text-muted filter w-auto"
+				>
+					<option value="">Todas as regiões</option>
+
+					<option v-for="region in regions" :key="region" :value="region">
+						{{ capitalize(region) }}
+					</option>
 				</select>
 			</Motion>
 		</div>
-
 	</div>
 </template>
 

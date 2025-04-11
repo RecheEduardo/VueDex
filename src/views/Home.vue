@@ -1,11 +1,12 @@
 <template>
 	<div class="home-container container pt-4">
 
-		<!-- Motion asChild cria um elemento animado na View -->
+		<!-- essa div Motion se repetirá por todo código, 
+				pois ela engloba as animaçoes da lib! -->
 		<Motion asChild
-			:initial="{ y: -150, opacity: 0 }"
+			:initial="{ y: -250, opacity: 0 }"
 			:animate="{ y: 0, opacity: 1 }" 
-			:transition="{ type: 'spring', stiffness: 100, damping: 25 }"
+			:transition="{ type: 'spring', stiffness: 75, damping: 25 }"
 		>
 			<h1 class="site-title display-1 mb-5 fw-bold text-muted text-center">
 				Pokédex Interativa
@@ -17,22 +18,28 @@
 		<Motion asChild
 			:initial="{ y: 150, opacity: 0 }"
 			:animate="{ y: 0, opacity: 1 }"
-			:transition="{ type: 'spring', stiffness: 100, damping: 25 }"
+			:transition="{ type: 'spring', stiffness: 100, damping: 25, delay: 0.5 }"
 		>
-     		<Filter @filter="handleUpdateFilters" class="border-bottom pb-4"/>
+     		<Filter @filter="handleUpdateFilters" class="pb-4"/>
    		</Motion>
 
 		<!-- lista de pokemon: se estiver buscando, mostra só o resultado da busca -->
-		<ul class="pokemon-list list-group mb-5">
-			<Motion asChild v-for="(pokemon, index) in displayPokemons" :key="index"
-				:initial="{ scale: 0.5, opacity: 0 }"
-				:whileInView="{ scale: 1, opacity: 1 }"
-				:transition="{ type: 'spring', stiffness: 200, damping: 25 }"
-				:inViewOptions="{ once: true, margin: '-10% 0px -10% 0px' }"
-			>
-				<PokemonCard :pokemon="pokemon"/>
-			</Motion>
-		</ul>
+		<Motion asChild
+			:initial="{ y: 150, opacity: 0 }"
+			:animate="{ y: 0, opacity: 1 }"
+			:transition="{ type: 'spring', stiffness: 100, damping: 25, delay: 1.0	 }"
+		>
+			<ul class="pokemon-list list-group mb-5">
+				<Motion asChild v-for="(pokemon, index) in displayPokemons" :key="index"
+					:initial="{ scale: 0.5, opacity: 0 }"
+					:whileInView="{ scale: 1, opacity: 1 }"
+					:transition="{ type: 'spring', stiffness: 200, damping: 25 }"
+					:inViewOptions="{ once: true, margin: '-10% 0px -10% 0px' }"
+				>
+					<PokemonCard :pokemon="pokemon"/>
+				</Motion>
+			</ul>
+		</Motion>
 
 
 		<!-- estado de loading -->

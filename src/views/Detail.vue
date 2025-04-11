@@ -1,27 +1,38 @@
 <template>
 	<div>
 		<!-- navegaçao entre pokemons sequencial -->
-		<div class="py-3 container d-flex justify-content-between border-bottom" v-if="pokemon">
-			<router-link :to="{ name: 'Home' }" 
-				class="btn btn-lg btn-outline-secondary"
+		<div class="container" v-if="pokemon">
+			<!-- essa div Motion se repetirá por todo código, 
+				pois ela engloba as animaçoes da lib! -->
+			<Motion asChild 
+				:initial="{ y: -150, opacity: 0 }"
+				:animate="{ y: 0, opacity: 1 }" 
+				:transition="{ type: 'spring', stiffness: 150, damping: 20 }"
 			>
-				Voltar
-			</router-link>
-			<div class="d-flex gap-3">
-				<router-link :to="{ name: 'Detail', params: { id: pokemon.id - 1 } }"
-					class="btn btn-lg btn-danger fw-bold box-shadow"
-					v-if="pokemon.id > 1"
-				>
-					{{ pokemon.id - 1 }}
-					<i class="ti ti-pokeball"></i>
-				</router-link>
-				<router-link :to="{ name: 'Detail', params: { id: pokemon.id + 1 } }"
-					class="btn btn-lg btn-danger fw-bold box-shadow"
-				>
-					<i class="ti ti-pokeball"></i>
-					{{ pokemon.id + 1 }}
-				</router-link>
-			</div>
+				<div class="d-flex justify-content-between border-bottom py-3">
+
+					<router-link :to="{ name: 'Home' }" class="btn btn-lg btn-outline-secondary">
+						Voltar
+					</router-link>
+
+					<div class="d-flex gap-3">
+						<router-link :to="{ name: 'Detail', params: { id: pokemon.id - 1 } }"
+							class="btn btn-lg btn-danger fw-bold box-shadow"
+							v-if="pokemon.id > 1"
+						>
+							{{ pokemon.id - 1 }}
+							<i class="ti ti-pokeball"></i>
+						</router-link>
+
+						<router-link :to="{ name: 'Detail', params: { id: pokemon.id + 1 } }"
+							class="btn btn-lg btn-danger fw-bold box-shadow"
+						>
+							<i class="ti ti-pokeball"></i>
+							{{ pokemon.id + 1 }}
+						</router-link>
+					</div>
+				</div>
+			</Motion>
 		</div>
 
 		<div class="detail-container container d-flex justify-content-center my-4" v-if="pokemon">
@@ -31,17 +42,17 @@
 
 				<div class="sprite-display">
 					<Motion asChild
-							:initial="{ y: 50, opacity: 0 }"
-							:animate="{ y: 0, opacity: 1 }" 
-							:transition="{ type: 'spring', stiffness: 100, damping: 25, delay: 0.25 }"
+						:initial="{ y: 50, opacity: 0 }"
+						:animate="{ y: 0, opacity: 1 }" 
+						:transition="{ type: 'spring', stiffness: 100, damping: 25, delay: 0.25 }"
 					>
 						<h3 class="text-muted text-center mb-2">#{{ pokemon.id }}</h3>
 					</Motion>
 
 					<Motion asChild
-							:initial="{ scale: 0, opacity: 0 }"
-							:animate="{ scale: 1, opacity: 1 }" 
-							:transition="{ type: 'spring', stiffness: 100, damping: 25, delay: 0.50 }"
+						:initial="{ scale: 0, opacity: 0 }"
+						:animate="{ scale: 1, opacity: 1 }" 
+						:transition="{ type: 'spring', stiffness: 100, damping: 25, delay: 0.50 }"
 					>
 						<h1 class="text-center display-3 fw-bold mb-4">{{ capitalize(pokemon.name) }}</h1>
 					</Motion>
@@ -52,7 +63,7 @@
 							:key="type"
 							:initial="{ opacity: 0, scale: 0 }"
 							:animate="{ opacity: 1, scale: 1 }"
-							:transition="{ type: 'spring', stiffness: 100, damping: 25, delay: 0.50 }"
+							:transition="{ type: 'spring', stiffness: 100, damping: 15, delay: 0.75 }"
 							asChild
 						>
 							<img
@@ -64,9 +75,9 @@
 					</div>
 
 					<Motion asChild
-							:initial="{ scale: 0, opacity: 0 }"
-							:animate="{ scale: 1, opacity: 1 }" 
-							:transition="{ type: 'spring', stiffness: 100, damping: 25, delay: 0.75 }"
+						:initial="{ scale: 0, opacity: 0 }"
+						:animate="{ scale: 1, opacity: 1 }" 
+						:transition="{ type: 'spring', stiffness: 50, damping: 10, delay: 0.75 }"
 					>
 						<img
 							:src="spriteUrl"
@@ -85,23 +96,24 @@
 					<h2 class="fw-bold text-muted mt-3">Sprite</h2>
 				</Motion>
 
-					<div class="sprite-select">
-						<Motion asChild
-							:initial="{ y: 50, opacity: 0 }"
-							:animate="{ y: 0, opacity: 1 }" 
-							:transition="{ type: 'spring', stiffness: 100, damping: 25, delay: 1.25 }"
+				<div class="sprite-select">
+					<Motion asChild
+						:initial="{ y: 50, opacity: 0 }"
+						:animate="{ y: 0, opacity: 1 }" 
+						:transition="{ type: 'spring', stiffness: 100, damping: 25, delay: 1.25 }"
+					>
+
+						<select v-model="selectedSprite" 
+							class="form-select w-auto border-0 box-shadow text-muted mt-3"
 						>
-							<select v-model="selectedSprite" class="form-select w-auto border-0 box-shadow text-muted mt-3">
-								<option
-									v-for="(url, key) in validSprites"
-									:key="key"
-									:value="key"
-								>
-									{{ formatLabel(key) }}
-								</option>
-							</select>
-						</Motion>
-					</div>
+							<option v-for="(url, key) in validSprites" :key="key" :value="key">
+								{{ formatLabel(key) }}
+							</option>
+						</select>
+						
+					</Motion>
+				</div>
+
 			</section>
 
 			<Motion asChild
@@ -112,60 +124,70 @@
 				<!-- detalhes do pokemon da tela -->
 				<section class="section details-div d-flex flex-column">
 
-					<!-- nova aba de descrição -->
-					<section class="section border-bottom pb-4">
-						<h2 class="fs-1 text-muted fw-bold mb-3">Descrição em inglês</h2>
-						<p v-if="loadingDescription">Carregando descrição...</p>
-						<p v-else class="text-center fs-5">{{ description }}</p>
-					</section>
+					<Motion asChild
+						:initial="{ y: 80, opacity: 0 }"
+						:animate="{ y: 0, opacity: 1 }" 
+						:transition="{ type: 'spring', stiffness: 125, damping: 15, delay: 1.5 }"
+					>
+						<!-- nova aba de descrição -->
+						<section class="section border-bottom pb-4">
+							<h2 class="fs-1 text-muted fw-bold mb-3">Descrição em inglês</h2>
+							<p v-if="loadingDescription">Carregando descrição...</p>
+							<p v-else class="text-center fs-5 mb-0">{{ description }}</p>
+						</section>
+					</Motion>
 
-					<!-- movimentos com paginacao -->
-					<section class="section d-flex flex-column gap-3 border-bottom py-4">
-						<h2 class="fs-1 text-muted fw-bold mb-0">Movimentos</h2>
-						<span class="text-end text-muted">Página {{ currentMovePage }} de {{ totalMovePages }}</span>
-						<div class="row row-cols-2 g-3">
-							<div v-for="(move, idx) in paginatedMoves" :key="`move-${idx}`" class="col">
-								<Motion
-									v-for="(type, index) in pokemon.types"
-									:key="type"
-									:initial="{ opacity: 0, scale: 0 }"
-									:animate="{ opacity: 1, scale: 1 }"
-									:transition="{ type: 'spring', stiffness: 100, damping: 25, delay: 0.50 }"
-									asChild
-									>
+					<Motion asChild
+						:initial="{ y: 80, opacity: 0 }"
+						:animate="{ y: 0, opacity: 1 }" 
+						:transition="{ type: 'spring', stiffness: 125, damping: 15, delay: 1.75 }"
+					>
+						<!-- movimentos com paginacao -->
+						<section class="section d-flex flex-column gap-3 border-bottom py-4">
+							<h2 class="fs-1 text-muted fw-bold mb-0">Movimentos</h2>
+							<span class="text-end text-muted">Página {{ currentMovePage }} de {{ totalMovePages }}</span>
+							<div class="row row-cols-2 g-3">
+								<div v-for="(move, idx) in paginatedMoves" :key="`move-${idx}`" class="col">
 									<div class="card box-shadow border-0 p-3 text-muted text-center fs-5 fw-bold">
 										{{ capitalize(move) }}
 									</div>
-								</Motion>
 								</div>
-						</div>
-						<div class="pagination-controls d-flex justify-content-between mt-2">
-							<button @click="prevPage" :disabled="currentMovePage === 1" class="btn box-shadow fw-bold btn-secondary">
-								Anterior
-							</button>
-							<button
-								@click="nextPage"
-								:disabled="currentMovePage === totalMovePages"
-								class="btn box-shadow fw-bold btn-primary"
-							>
-								Proximo
-							</button>
-						</div>
-					</section>
+							</div>
+							<div class="pagination-controls d-flex justify-content-between mt-2">
+								<button @click="prevPage" :disabled="currentMovePage === 1" class="btn box-shadow fw-bold btn-secondary">
+									Anterior
+								</button>
+								<button
+									@click="nextPage"
+									:disabled="currentMovePage === totalMovePages"
+									class="btn box-shadow fw-bold btn-primary"
+								>
+									Proximo
+								</button>
+							</div>
+						</section>
+					</Motion>
 
-					<!-- lista de jogos -->
-					<section v-if="pokemon.gameIndices.length" class="section border-bottom py-2">
-						<h2 class="display-5">Jogos</h2>
-						<div class="d-flex flex-wrap gap-2 my-4">
-							<span
-								v-for="(game, idx) in pokemon.gameIndices"
-								:key="idx"
-								class="badge box-shadow text-bg-secondary"
-							>
-								{{ capitalize(game) }}
-							</span>
-						</div>
-					</section>
+					<Motion asChild
+						:initial="{ y: 80, opacity: 0 }"
+						:animate="{ y: 0, opacity: 1 }" 
+						:transition="{ type: 'spring', stiffness: 125, damping: 15, delay: 2 }"
+					>
+						<!-- lista de jogos -->
+						<section v-if="pokemon.gameIndices.length" class="section border-bottom py-2">
+							<h2 class="display-5">Jogos</h2>
+							<div class="d-flex flex-wrap gap-2 my-4">
+								<span
+									v-for="(game, idx) in pokemon.gameIndices"
+									:key="idx"
+									class="badge box-shadow text-bg-secondary"
+								>
+									{{ capitalize(game) }}
+								</span>
+							</div>
+						</section>
+					</Motion>
+
 
 					<!-- lista de evolucoes, se existir -->
 					<section class="py-4" v-if="evolutions.length">

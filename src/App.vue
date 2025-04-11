@@ -14,7 +14,8 @@
 /* background da pokebola */
 body { 
   margin: 0;
-  background-image: url('../public/wallpaper.png');
+  background-color: #fafafa !important;
+  background-image: url('../public/wallpaper.svg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
