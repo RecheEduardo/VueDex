@@ -16,7 +16,7 @@ jobs:
     - name: instala o node
       uses: actions/setup-node@v3
       with:
-        node-version: 18  # ou a versão que seu projeto usa
+        node-version: 18  # versao que o projeto usa
 
     - name: instala as dependências
       run: npm install
