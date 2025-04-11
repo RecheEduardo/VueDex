@@ -1,0 +1,25 @@
+name: testes automatizados vitest
+
+on:
+  push:       # roda quando der push
+    branches: [main]  # ou o nome do seu branch principal
+  pull_request:       # vai rodar tambem nos pull requests
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout o repositório
+      uses: actions/checkout@v3
+
+    - name: instala o node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18  # ou a versão que seu projeto usa
+
+    - name: instala as dependências
+      run: npm install
+
+    - name: roda os testes
+      run: npm run test
