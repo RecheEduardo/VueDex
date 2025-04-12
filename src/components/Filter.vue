@@ -159,4 +159,10 @@ export default {
 		font-size: 1.25rem !important;
 	}
 }
+
+@media (max-width: 400px) {
+	.filter{
+		font-size: .85rem;
+	}
+}
 </style>
