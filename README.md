@@ -123,7 +123,7 @@ src/
 
 <img align="center" src="https://github.com/RecheEduardo/VueDex/blob/main/public/poke_example.png?raw=true" />
 
-<img align="center" src="https://github.com/RecheEduardo/VueDex/blob/main/public/poke_example.png?raw=true" />
+<img align="center" src="https://github.com/RecheEduardo/VueDex/blob/main/public/poke_example2.png?raw=true" />
 
 ---
 
