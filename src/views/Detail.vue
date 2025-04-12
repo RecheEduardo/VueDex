@@ -110,9 +110,22 @@
 								{{ formatLabel(key) }}
 							</option>
 						</select>
-						
+
 					</Motion>
+						
 				</div>
+				<Motion asChild
+					:initial="{ opacity: 0 }"
+					:animate="{ opacity: 1 }" 
+					:transition="{ type: 'spring', stiffness: 75, damping: 25, delay: 1.5 }"
+				>
+					<!-- switcher de idioma -->
+					<div class="container d-flex w-100 justify-content-center gap-3 pt-5">
+						<button @click="changeLocale('pt')" class="btn flag flag-sm flag-country-br downScale box-shadow"></button>
+						<button @click="changeLocale('en')" class="btn flag flag-sm flag-country-us downScale box-shadow"></button>
+						<button @click="changeLocale('es')" class="btn flag flag-sm flag-country-es downScale box-shadow"></button>
+					</div>
+				</Motion>
 
 			</section>
 
@@ -224,19 +237,7 @@
 							</div>
 						</section>
 					</Motion>
-					
-				<Motion asChild
-					:initial="{ opacity: 0 }"
-					:animate="{ opacity: 1 }" 
-					:transition="{ type: 'spring', stiffness: 75, damping: 25, delay: 1.5 }"
-				>
-					<!-- switcher de idioma -->
-					<div class="container d-flex w-100 justify-content-end gap-3 pt-3 border-top">
-						<button @click="changeLocale('pt')" class="btn flag flag-sm flag-country-br downScale"></button>
-						<button @click="changeLocale('en')" class="btn flag flag-sm flag-country-us downScale"></button>
-						<button @click="changeLocale('es')" class="btn flag flag-sm flag-country-es downScale"></button>
-					</div>
-				</Motion>
+				
 				</section>
 			</Motion>
 		</div>
