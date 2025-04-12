@@ -2,7 +2,7 @@
   <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=700&size=40&pause=1000&color=FAFAFA&center=true&vCenter=true&width=435&lines=%F0%9F%8E%AE+VueDex" />
 </h1>
 
-**VueDex** é uma aplicação web desenvolvida com Vue.js 3, TypeScript e Vite, que simula uma Pokédex interativa e moderna. Ela consome dados da PokéAPI para listar, filtrar e exibir detalhes completos dos Pokémon de forma responsiva, com animações suaves e acessibilidade garantida.
+**VueDex** é uma aplicação web desenvolvida com Vue.js 3, Bootstrap e Vitest, que simula uma Pokédex interativa e moderna. Ela consome dados da API oficial de pokémon PokéAPI para listar, filtrar e exibir detalhes completos dos Pokémon de forma responsiva, com animações suaves e acessibilidade garantida com internacionalização e interface amigável.
 
 ---
 
@@ -16,17 +16,13 @@ Framework JavaScript progressivo utilizado para construir a interface do projeto
 
 Na vuedex, o javascript é usado junto com typescript pra controlar o comportamento da aplicação, buscar e tratar os dados da pokéapi, gerenciar o estado global com vuex, controlar a navegação com vue router e aplicar animações com motion one. ele também é responsável por lidar com eventos, lógica de exibição, filtros, e interações nos componentes vue, garantindo que a pokédex funcione de forma dinâmica e responsiva.
 
-## <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white" height="45" />
+## <img src="https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white" height="45"  />
 
-Ferramenta de build moderna, rápida e otimizada, usada para criar e executar o ambiente de desenvolvimento da VueDex. O Vite proporciona uma experiência de desenvolvimento extremamente ágil com recarregamento instantâneo.
+Framework CSS utilizado para estilizar e tornar a interface da aplicação mais agradável e responsiva. O Bootstrap facilita o design da aplicação, proporcionando uma interface limpa e consistente em dispositivos móveis e desktop sem a necessidade de criar CSS do zero. Ele inclui componentes como botões, formulários, modais e grids, que são amplamente utilizados para garantir uma experiência de usuário rica e adaptável.
 
 ## <img src="https://img.shields.io/badge/Vuex-35495E?style=for-the-badge&logo=vue.js&logoColor=4FC08D" height="45" />
 
 Gerenciador de estado utilizado para compartilhar dados entre componentes. A VueDex usa Vuex para armazenar e atualizar a lista de Pokémon, filtros e configurações globais da aplicação.
-
-## <img src="https://img.shields.io/badge/SCSS-CC6699?style=for-the-badge&logo=sass&logoColor=white" height="45" />
-
-Pré-processador CSS usado para estilização da interface. O SCSS permite criar estilos modulares, reutilizáveis e organizados.
 
 ## <img src="https://img.shields.io/badge/Motion_One-000000?style=for-the-badge&logo=motion&logoColor=white" height="45" />
 
@@ -45,8 +41,8 @@ Biblioteca leve de animações utilizada para aplicar transições suaves entre 
 **Funcionalidade**: Exibe os nomes dos Pokémon no idioma do usuário, baseado nos dados da PokéAPI.
 
 ### **PokéAPI** 🐱‍🏍  
-**Uso**: API pública utilizada como fonte de dados oficial.  
-**Funcionalidade**: Fornece todas as informações dos Pokémon: imagens, tipos, habilidades, status, descrições e mais.
+**Uso**: API pública utilizada como fonte de dados oficial para o app!  
+**Funcionalidade**: Fornece todas as informações dos Pokémon: imagens, tipos, habilidades, descrições e mais.
 
 ---
 
@@ -78,7 +74,7 @@ A aplicação estará disponível em `http://localhost:5173`.
 # 🧩 Funcionalidades
 
 ### **Scroll Infinito**:
-- Os Pokémon são carregados aos poucos conforme o usuário rola a tela, evitando sobrecarga na página.
+- Os Pokémon são carregados aos poucos conforme o usuário rola a tela, evitando sobrecarga na página (20 em 20).
 
 ##
 
@@ -88,21 +84,21 @@ A aplicação estará disponível em `http://localhost:5173`.
 ##
   
 ### **Página de Detalhes**:
-- Ao clicar em um Pokémon, o usuário visualiza detalhes completos com animações em cadeia (nome, descrição, tipos, habilidades, altura, peso e status).
+- Ao clicar em um Pokémon, o usuário visualiza detalhes completos com animações em cadeia (nome, descrição, tipos, movimentos, jogos e evoluções).
 
 ##
   
 ### **Animações com Motion Vue**:
-- As transições entre elementos são suaves e fluidas, melhorando a experiência do usuário.
+- As transições entre elementos são suaves e fluidas, melhorando a experiência do usuário com sua componentização de animations.
 
 ##
   
 ### **Acessibilidade e Responsividade**:
-- Projeto responsivo e com boas práticas de acessibilidade aplicadas.
+- Projeto responsivo e com boas práticas de acessibilidade aplicadas, auxiliadas pelo layout do bootstrap.
 
 ##
   
-### **Internacionalização**:
+### **Internacionalização (I18n) **:
 - A VueDex traduz a página de descrições dos Pokémon dinamicamente com base no idioma configurado.
 
 ---
