@@ -6,6 +6,14 @@
 
 ---
 
+# 📸 Demonstração
+
+<img align="center" src="https://github.com/RecheEduardo/VueDex/blob/main/public/poke_example.png?raw=true" />
+
+<img align="center" src="https://github.com/RecheEduardo/VueDex/blob/main/public/poke_example2.png?raw=true" />
+
+---
+
 # 🚀 Tecnologias Utilizadas
 
 ## <img src="https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vue.js&logoColor=4FC08D" height="45" />
@@ -119,13 +127,6 @@ src/
 
 ---
 
-# 📸 Demonstração
-
-<img align="center" src="https://github.com/RecheEduardo/VueDex/blob/main/public/poke_example.png?raw=true" />
-
-<img align="center" src="https://github.com/RecheEduardo/VueDex/blob/main/public/poke_example2.png?raw=true" />
-
----
 
 # 🤝 Contribuição
 1. Faça um fork do repositório.
