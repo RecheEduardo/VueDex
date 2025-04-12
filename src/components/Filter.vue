@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<!-- essa div Motion se repetirá por todo código, 
-			pois ela engloba as animaçoes da lib! -->
+			pois ela engloba as animações da lib! -->
 		<Motion asChild
 			:initial="{ scale: 0.5, opacity: 0 }"
 			:animate="{ scale: 1, opacity: 1 }" 
@@ -10,12 +10,14 @@
 			<!-- input com botão de busca -->
 			<div class="filter rounded my-4">
 				<div class="input-group input-group-lg mb-2">
-					<!-- campo de texto vinculado ao estado local -->
+					<!-- campo de texto vinculado ao estado local,
+						FEAT NOVA: busca ao apertar enter! -->
 					<input
 						type="text"
 						v-model="searchQuery"
 						:placeholder="$t('searchPlaceholder')"
 						class="form-control pokemon-input border-0 fs-2"
+						@keyup.enter="emitFilter" 
 					>
 					<!-- botao que dispara o filtro -->
 					<button
@@ -30,7 +32,7 @@
 		</Motion>
 
 		<!-- filtros opcionais de tipo e região -->
-		<div class="d-flex justify-content-end gap-3">
+		<div class="d-flex justify-content-end gap-3 align-items-center flex-wrap">
 			<Motion asChild
 				:initial="{ scale: 0, opacity: 0 }"
 				:animate="{ scale: 1, opacity: 1 }" 
@@ -40,7 +42,7 @@
 					class="form-select form-select-lg border-0 text-muted filter w-auto"
 				>
 					<option value="">{{ $t('allTypes') }}</option>
-					
+
 					<option v-for="type in types" :key="type" :value="type">
 						{{ capitalize(type) }}
 					</option>
@@ -62,6 +64,21 @@
 						{{ capitalize(region) }}
 					</option>
 				</select>
+			</Motion>
+
+			<Motion asChild
+				:initial="{ scale: 0, opacity: 0 }"
+				:animate="{ scale: 1, opacity: 1 }" 
+				:transition="{ stiffness: 100, damping: 20 }"
+			>
+				<!-- limpa todos os filtros e retorna ao scroll infinito -->
+				<button
+					class="btn btn-secondary fw-bold downScale"
+					type="button"
+					@click="clearFilters"
+				>
+					{{ $t('clearFilters') }}
+				</button>
 			</Motion>
 		</div>
 	</div>
@@ -90,6 +107,15 @@ export default {
 			})
 		}
 
+		function clearFilters() {
+			// limpa todos os campos
+			searchQuery.value = ''
+			selectedType.value = ''
+			selectedRegion.value = ''
+			// retorna ao modo padrão (scroll infinito)
+			emit('filter', { query: '', type: '', region: '' })
+		}
+
 		onMounted(async () => {
 			types.value = await fetchTypeList()
 			regions.value = await fetchPokedexList()
@@ -102,6 +128,7 @@ export default {
 			types,
 			regions,
 			emitFilter,
+			clearFilters,
 			Motion
 		}
 	},
@@ -125,10 +152,10 @@ export default {
 }
 
 @media (max-width: 768px) {
-	.form-select-lg{
+	.form-select-lg {
 		font-size: 1rem;
 	}
-	.pokemon-input{
+	.pokemon-input {
 		font-size: 1.25rem !important;
 	}
 }
