@@ -210,7 +210,7 @@
 
 					<Motion asChild
 						v-if="evolutions.length"
-						:initial="{ y: 80, opacity: 0 }"
+						:initial="{ y: 30, opacity: 0 }"
 						:animate="{ y: 0, opacity: 1 }" 
 						:transition="{ type: 'spring', stiffness: 125, damping: 15, delay: 2.25 }"
 					>
@@ -222,10 +222,9 @@
 									asChild
 									v-for="(evo, idx) in evolutions"
 									:key="idx"
-									:initial="{ opacity: 0, y: 20 }"
-									:whileInView="{ opacity: 1, y: 0 }"
-									:transition="{ type: 'spring', stiffness: 75, damping: 25}"
-									:inViewOptions="{ once: true, margin: '-10% 0px -10% 0px' }"
+									:initial="{ opacity: 0}"
+									:animate="{ opacity: 1}"
+									:transition="{ type: 'spring', stiffness: 125, damping: 15, delay: idx * 0.15 }"
 								>
 									<router-link
 										:to="{ name: 'Detail', params: { id: evo.name } }"
